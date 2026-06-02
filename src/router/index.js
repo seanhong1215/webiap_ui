@@ -6,11 +6,9 @@ import FormCatalog from '../views/FormCatalog.vue';
 import FormDetail from '../views/FormDetail.vue';
 import ApprovalCenter from '../views/ApprovalCenter.vue';
 import MyRequests from '../views/MyRequests.vue';
-import ProcessListManagement from '../views/ProcessListManagement.vue';
-import VersionControlManagement from '../views/VersionControlManagement.vue';
-import ProcessReview from '../views/ProcessReview.vue';
-import ConditionSetting from '../views/ConditionSetting.vue';
-import ProcessFlowView from '../views/ProcessFlowView.vue';
+import AdminOverview from '../views/AdminOverview.vue';
+import AdminProcesses from '../views/AdminProcesses.vue';
+import AdminRecords from '../views/AdminRecords.vue';
 import NotFound from '../views/NotFound.vue';
 
 const routes = [
@@ -24,14 +22,10 @@ const routes = [
     { path: '/approvals', name: 'ApprovalCenter', component: ApprovalCenter, meta: { title: '審核中心' } },
     { path: '/my-requests', name: 'MyRequests', component: MyRequests, meta: { title: '我的申請' } },
 
-    // ── 流程管理（原有功能）────────────────────────
-    { path: '/admin/processes', name: 'ProcessListManagement', component: ProcessListManagement, meta: { title: '流程設定' } },
-    { path: '/admin/version', name: 'VersionControlManagement', component: VersionControlManagement, meta: { title: '版本管理' } },
-    { path: '/admin/version/review', name: 'VersionProcessReview', component: ProcessReview, meta: { title: '查看版本' } },
-    { path: '/admin/version/condition', name: 'VersionConditionSetting', component: ConditionSetting, meta: { title: '版本條件設定' } },
-    { path: '/admin/review', name: 'ProcessReview', component: ProcessReview, meta: { title: '查看流程' } },
-    { path: '/admin/review/flow', name: 'ProcessFlowView', component: ProcessFlowView, meta: { title: '流程圖' } },
-    { path: '/admin/condition', name: 'ConditionSetting', component: ConditionSetting, meta: { title: '條件設定' } },
+    // ── 管理員功能 ──────────────────────────────────
+    { path: '/admin', name: 'AdminOverview', component: AdminOverview, meta: { title: '系統總覽', requiresAdmin: true } },
+    { path: '/admin/processes', name: 'AdminProcesses', component: AdminProcesses, meta: { title: '流程總覽', requiresAdmin: true } },
+    { path: '/admin/records', name: 'AdminRecords', component: AdminRecords, meta: { title: '申請記錄', requiresAdmin: true } },
 
     { path: '/:patchMatch(.*)*', name: 'NotFound', component: NotFound },
 ];
@@ -45,7 +39,7 @@ router.beforeEach((to) => {
     const currentUser = store.getters['user/currentUser'];
     if (to.name === 'Login') return true;
     if (!currentUser) return { name: 'Login' };
-    if (to.path.startsWith('/admin') && currentUser.role !== 'admin') return { name: 'Dashboard' };
+    if (to.meta.requiresAdmin && currentUser.role !== 'admin') return { name: 'Dashboard' };
     return true;
 });
 

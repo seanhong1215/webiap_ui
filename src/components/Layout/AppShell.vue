@@ -37,27 +37,22 @@
 
                 <!-- 管理員功能 -->
                 <template v-if="isAdmin">
-                    <div class="nav-section-label" v-show="!sidebarCollapsed" style="margin-top: 16px">流程管理</div>
+                    <div class="nav-section-label" v-show="!sidebarCollapsed" style="margin-top: 16px">管理後台</div>
                     <div class="nav-divider" v-show="sidebarCollapsed"></div>
 
-                    <router-link :to="{ name: 'ProcessListManagement' }" class="nav-item" active-class="active">
+                    <router-link :to="{ name: 'AdminOverview' }" class="nav-item" active-class="active">
+                        <i class="fal fa-th-large nav-icon"></i>
+                        <span class="nav-label" v-show="!sidebarCollapsed">系統總覽</span>
+                    </router-link>
+
+                    <router-link :to="{ name: 'AdminProcesses' }" class="nav-item" active-class="active">
                         <i class="fal fa-sitemap nav-icon"></i>
-                        <span class="nav-label" v-show="!sidebarCollapsed">流程設定</span>
+                        <span class="nav-label" v-show="!sidebarCollapsed">流程總覽</span>
                     </router-link>
 
-                    <router-link :to="{ name: 'ConditionSetting' }" class="nav-item" active-class="active" v-if="$route.name === 'ConditionSetting' || $route.name === 'VersionConditionSetting'">
-                        <i class="fal fa-code-branch nav-icon"></i>
-                        <span class="nav-label" v-show="!sidebarCollapsed">條件設定</span>
-                    </router-link>
-
-                    <router-link
-                        :to="{ name: 'VersionControlManagement' }"
-                        class="nav-item"
-                        active-class="active"
-                        v-if="$route.name === 'VersionControlManagement' || $route.name === 'VersionProcessReview'"
-                    >
-                        <i class="fal fa-history nav-icon"></i>
-                        <span class="nav-label" v-show="!sidebarCollapsed">版本管理</span>
+                    <router-link :to="{ name: 'AdminRecords' }" class="nav-item" active-class="active">
+                        <i class="fal fa-clipboard-list nav-icon"></i>
+                        <span class="nav-label" v-show="!sidebarCollapsed">申請記錄</span>
                     </router-link>
                 </template>
             </nav>
@@ -130,12 +125,9 @@ export default {
                 ApprovalDetail: '審核表單',
                 MyRequests: '我的申請',
                 SubmissionDetail: '申請詳情',
-                ProcessListManagement: '流程設定',
-                ConditionSetting: '條件設定',
-                VersionControlManagement: '版本管理',
-                ProcessReview: '查看流程',
-                VersionProcessReview: '查看版本',
-                VersionConditionSetting: '版本條件設定',
+                AdminOverview: '系統總覽',
+                AdminProcesses: '流程總覽',
+                AdminRecords: '申請記錄',
             };
             return titleMap[this.$route.name] || 'FlowRing';
         },

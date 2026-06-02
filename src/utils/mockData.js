@@ -178,7 +178,7 @@ const VERSION_HISTORY = {
 };
 
 // 條件設定資料（流程狀態機）
-const CONDITION_DATA = {
+export const CONDITION_DATA = {
     PRO001: {
         id: 'ROOT_PRO001',
         prjID: 'PRJ001',
@@ -332,7 +332,7 @@ const CONDITION_DATA = {
 };
 
 // 表單欄位（按流程）
-const ARTIFACT_ITEMS = {
+export const ARTIFACT_ITEMS = {
     ART001: [
         { name: 'LeaveType', synopsis: '請假類型', dbType: 'VARCHAR', type: 'ChoiceBox', id: 'ART001_ITEM1' },
         { name: 'Days', synopsis: '請假天數', dbType: 'NUMBER', type: 'NumberField', id: 'ART001_ITEM2' },
@@ -422,6 +422,157 @@ export const mockArtifactItems = async (artId) => {
         data: { data: items },
     };
 };
+
+// ─────────────────────────────────────────────────
+// 流程月均申請量
+// ─────────────────────────────────────────────────
+export const MOCK_PROCESS_MONTHLY_COUNT = {
+    PRO001: 18, PRO002: 7, PRO003: 12, PRO004: 0,
+    PRO005: 28, PRO006: 3, PRO007: 9, PRO008: 0,
+};
+
+// ─────────────────────────────────────────────────
+// 管理後台申請記錄（所有使用者）
+// ─────────────────────────────────────────────────
+export const MOCK_ADMIN_RECORDS = [
+    {
+        id: 'REC001', serialNo: 'LEAVE-2026-0528-001',
+        submitterName: '王小明', submitterDept: '人力資源部',
+        proId: 'PRO001', formName: '請假申請流程', category: '人事管理',
+        submittedAt: '2026-05-28', status: 'pending', currentStep: '主管審核',
+        steps: [
+            { name: '申請送出', actor: '王小明', date: '2026-05-28', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '', status: 'current' },
+            { name: 'HR 確認', actor: '陳美玲 人資', date: '', status: 'waiting' },
+        ],
+        formData: { LeaveType: '特休', Days: '3', StartDate: '2026-06-05', EndDate: '2026-06-07', Reason: '家庭旅遊' },
+    },
+    {
+        id: 'REC002', serialNo: 'EXP-2026-0520-003',
+        submitterName: '王小明', submitterDept: '人力資源部',
+        proId: 'PRO003', formName: '費用報銷申請', category: '財務管理',
+        submittedAt: '2026-05-20', status: 'approved', currentStep: '完成',
+        steps: [
+            { name: '申請送出', actor: '王小明', date: '2026-05-20', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '2026-05-21', status: 'done', remark: '同意報銷' },
+            { name: '財務審核', actor: '林志豪 財務長', date: '2026-05-22', status: 'done', remark: '已核帳' },
+        ],
+        formData: { ExpenseType: '差旅費', Amount: '4500', ExpenseDate: '2026-05-18', Description: '北部出差住宿費用' },
+    },
+    {
+        id: 'REC003', serialNo: 'ROOM-2026-0601-002',
+        submitterName: '王小明', submitterDept: '人力資源部',
+        proId: 'PRO005', formName: '會議室申請流程', category: '行政管理',
+        submittedAt: '2026-06-01', status: 'approved', currentStep: '完成',
+        steps: [
+            { name: '申請送出', actor: '王小明', date: '2026-06-01', status: 'done' },
+            { name: '行政確認', actor: '吳建宏 行政', date: '2026-06-01', status: 'done', remark: 'A會議室已確保' },
+        ],
+        formData: { RoomId: 'A會議室', Duration: '90', Attendees: '8', HasExternalGuest: 'false', Purpose: '季度業績檢討' },
+    },
+    {
+        id: 'REC004', serialNo: 'BORROW-2026-0525-001',
+        submitterName: '王小明', submitterDept: '人力資源部',
+        proId: 'PRO007', formName: '資源借用申請', category: '資產管理',
+        submittedAt: '2026-05-25', status: 'rejected', currentStep: '退回',
+        steps: [
+            { name: '申請送出', actor: '王小明', date: '2026-05-25', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '2026-05-26', status: 'rejected', remark: '借用期間過長，請重新申請' },
+        ],
+        formData: { ItemType: '精密儀器', ItemName: '示波器 DS1054Z', BorrowDays: '30', ReturnDate: '2026-06-24', Purpose: '研發測試用途' },
+    },
+    {
+        id: 'REC005', serialNo: 'LEAVE-2026-0601-002',
+        submitterName: '王小明', submitterDept: '人力資源部',
+        proId: 'PRO001', formName: '請假申請流程', category: '人事管理',
+        submittedAt: '2026-06-01', status: 'pending', currentStep: '主管審核',
+        steps: [
+            { name: '申請送出', actor: '王小明', date: '2026-06-01', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '', status: 'current' },
+        ],
+        formData: { LeaveType: '病假', Days: '1', StartDate: '2026-06-03', EndDate: '2026-06-03', Reason: '身體不適' },
+    },
+    {
+        id: 'REC006', serialNo: 'LEAVE-2026-0601-005',
+        submitterName: '張雅婷', submitterDept: '財務部',
+        proId: 'PRO001', formName: '請假申請流程', category: '人事管理',
+        submittedAt: '2026-06-01', status: 'pending', currentStep: '主管審核',
+        steps: [
+            { name: '申請送出', actor: '張雅婷', date: '2026-06-01', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '', status: 'current' },
+        ],
+        formData: { LeaveType: '事假', Days: '2', StartDate: '2026-06-04', EndDate: '2026-06-05', Reason: '家庭事宜' },
+    },
+    {
+        id: 'REC007', serialNo: 'EXP-2026-0531-002',
+        submitterName: '吳建宏', submitterDept: '行政部',
+        proId: 'PRO003', formName: '費用報銷申請', category: '財務管理',
+        submittedAt: '2026-05-31', status: 'pending', currentStep: '財務審核',
+        steps: [
+            { name: '申請送出', actor: '吳建宏', date: '2026-05-31', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '2026-05-31', status: 'done', remark: '同意' },
+            { name: '財務審核', actor: '林志豪 財務長', date: '', status: 'current' },
+        ],
+        formData: { ExpenseType: '業務費', Amount: '12500', ExpenseDate: '2026-05-30', Description: '客戶餐敘費用' },
+    },
+    {
+        id: 'REC008', serialNo: 'BORROW-2026-0530-001',
+        submitterName: '林志豪', submitterDept: '財務部',
+        proId: 'PRO007', formName: '資源借用申請', category: '資產管理',
+        submittedAt: '2026-05-30', status: 'pending', currentStep: '主管審核',
+        steps: [
+            { name: '申請送出', actor: '林志豪', date: '2026-05-30', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '', status: 'current' },
+        ],
+        formData: { ItemType: '一般設備', ItemName: '投影機 EPSON X41', BorrowDays: '5', ReturnDate: '2026-06-04', Purpose: '外部簡報使用' },
+    },
+    {
+        id: 'REC009', serialNo: 'LEAVE-2026-0529-003',
+        submitterName: '劉雅惠', submitterDept: '資產管理部',
+        proId: 'PRO001', formName: '請假申請流程', category: '人事管理',
+        submittedAt: '2026-05-29', status: 'pending', currentStep: '主管審核',
+        steps: [
+            { name: '申請送出', actor: '劉雅惠', date: '2026-05-29', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '', status: 'current' },
+        ],
+        formData: { LeaveType: '特休', Days: '5', StartDate: '2026-06-08', EndDate: '2026-06-12', Reason: '出國旅遊' },
+    },
+    {
+        id: 'REC010', serialNo: 'EXP-2026-0510-001',
+        submitterName: '陳美玲', submitterDept: '人力資源部',
+        proId: 'PRO003', formName: '費用報銷申請', category: '財務管理',
+        submittedAt: '2026-05-10', status: 'approved', currentStep: '完成',
+        steps: [
+            { name: '申請送出', actor: '陳美玲', date: '2026-05-10', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '2026-05-11', status: 'done', remark: '核准' },
+            { name: '財務審核', actor: '林志豪 財務長', date: '2026-05-12', status: 'done', remark: '已入帳' },
+        ],
+        formData: { ExpenseType: '差旅費', Amount: '2800', ExpenseDate: '2026-05-08', Description: '南部客戶拜訪交通費' },
+    },
+    {
+        id: 'REC011', serialNo: 'ROOM-2026-0520-001',
+        submitterName: '林志豪', submitterDept: '財務部',
+        proId: 'PRO005', formName: '會議室申請流程', category: '行政管理',
+        submittedAt: '2026-05-20', status: 'approved', currentStep: '完成',
+        steps: [
+            { name: '申請送出', actor: '林志豪', date: '2026-05-20', status: 'done' },
+            { name: '行政確認', actor: '吳建宏 行政', date: '2026-05-20', status: 'done', remark: 'B會議室確認' },
+        ],
+        formData: { RoomId: 'B會議室', Duration: '120', Attendees: '15', HasExternalGuest: 'true', Purpose: '年度財務報告' },
+    },
+    {
+        id: 'REC012', serialNo: 'LEAVE-2026-0515-002',
+        submitterName: '劉雅惠', submitterDept: '資產管理部',
+        proId: 'PRO001', formName: '請假申請流程', category: '人事管理',
+        submittedAt: '2026-05-15', status: 'approved', currentStep: '完成',
+        steps: [
+            { name: '申請送出', actor: '劉雅惠', date: '2026-05-15', status: 'done' },
+            { name: '主管審核', actor: '李建國 部長', date: '2026-05-15', status: 'done', remark: '核准' },
+            { name: 'HR 確認', actor: '陳美玲 人資', date: '2026-05-16', status: 'done', remark: '已登記' },
+        ],
+        formData: { LeaveType: '事假', Days: '1', StartDate: '2026-05-22', EndDate: '2026-05-22', Reason: '個人事項' },
+    },
+];
 
 // ─────────────────────────────────────────────────
 // 使用者申請紀錄（我的申請）
