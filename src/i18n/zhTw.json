@@ -1,0 +1,529 @@
+{
+    "router": {
+        "ProcessListManagement": "流程管理",
+        "VersionControlManagement": "版本管理",
+        "VersionControlManagementTitle": "版本總覽",
+        "ProcessReview": "查看",
+        "ConditionSetting": "條件設定",
+        "ConditionImport": "條件載入",
+        "AutoSimulation": "自動模擬",
+        "SingleSimulation": "單次模擬",
+        "BatchSimulation": "批次模擬",
+        "SimulationResult": "模擬結果",
+        "RuleSetting": "規則設定",
+        "NotifyRuleSetting": "通知期限設定",
+        "AdvanceFormRuleSetting": "資料進階設定",
+        "ProcessSimulation": "流程模擬",
+        "ReviewSimulationResult": "查看",
+        "PageNotFound": "找不到此頁面",
+        "GroupSignSetting": "批次簽核設定"
+    },
+    "status": {
+        "all": "全部",
+        "init": "初始",
+        "ready": "待生效",
+        "running": "生效中",
+        "close": "已關閉"
+    },
+    "processInfo": {
+        "id": "流水編號",
+        "processId": "流程ID",
+        "proName": "流程名稱",
+        "category": "所屬分類",
+        "manager": "管理者",
+        "managerDep": "管理單位",
+        "createTime": "創建時間",
+        "effectiveTime": "生效時間",
+        "closeTime": "關閉時間",
+        "desc": "流程說明",
+        "type": "流程狀態",
+        "version": "當前版本",
+        "limited": "權限範圍",
+        "status": "狀態",
+        "placeholder": {
+            "category": "分類選擇",
+            "manager": "人員選擇",
+            "managerDep": "部門選擇"
+        },
+        "submitMessage": {
+            "saveEditSuccess": "編輯成功",
+            "saveEditError": "儲存編輯異常",
+            "saveAuthSuccess": "權限設定成功",
+            "saveAuthError": "權限設定異常"
+        }
+    },
+    "advSearch": {
+        "name": "進階搜尋"
+    },
+    "processList": {
+        "processOverView": "流程總覽",
+        "authSetting": "權限設定",
+        "processSearch": "請輸入關鍵字，如：申請流程",
+        "card": "流程列表",
+        "list": "流程列表"
+    },
+    "processReview": {
+        "form": "表單內容",
+        "process": "流程規則",
+        "spec": "資料規格說明",
+        "download": "下載流程說明文件",
+        "noFlowChart": "無流程圖顯示，請設定流程條件規則",
+        "submitMessage": {
+            "downloadRefuse": "請設定流程條件規則，再進行下載動作",
+            "downloadNetworkError": "下載失敗，請確認網路是否延遲過久或異常"
+        }
+    },
+    "onOffLine": {
+        "online": "流程上線",
+        "offline": "流程下線",
+        "pleaseSetOnlineTime": "請設定流程上線日期",
+        "immediateOnline": "立即上線",
+        "customOnline": "自定義上線日期",
+        "onlineSuccess": "流程上線成功",
+        "onlineSuccessMessage1": "您可以啟動此流程",
+        "onlineSuccessMessage2": "之後，您可以啟動此流程",
+        "pleaseSetOffLineTime": "請設定流程下線日期",
+        "immediateOffLine": "立即下線",
+        "customOffLine": "自定義下線日期",
+        "offLineProcessWay": "請選擇流程下線後 ，在舊流程規則下，尚未執行完流程的處理方式",
+        "offLineSuccess": "流程下線成功",
+        "offLineSuccessMessage1": "此流程為「已關閉」狀態，將無法啟動。",
+        "offLineSuccessMessage2": "後，流程下線，將無法啟動。",
+        "release": "發佈",
+        "pleaseSetReleaseTime": "選擇流程規則生效日期",
+        "immediateRelease": "立即生效",
+        "customRelease": "自訂生效日期",
+        "releaseProcessWay": "選擇新流程規則生效後，在舊流程規則下未執行完流程處理方式",
+        "releaseSuccess": "發佈成功",
+        "releaseFail": "發佈失敗",
+        "releaseSuccessMessage1": "您可以啟動此流程",
+        "releaseSuccessMessage2": "之後，您可以啟動此流程",
+        "modifyReleaseSuccess": "修改發佈成功",
+        "modifyReleaseSuccessMessage1": "您可以啟動此流程",
+        "modifyReleaseSuccessMessage2": "此流程暫未指定生效日期，暫無法啟動",
+        "modifyReleaseSuccessMessage3": "之後，您可以啟動此流程",
+        "processVersionInfo": "流程版本資訊",
+        "nowVersionIs": "當前發布版本為",
+        "keepProcessWay": "按舊流程繼續執行，直到流程結束",
+        "restartProcessWay": "無法繼續執行，系統重新啟動新流程，並提醒相關人員",
+        "setEffectiveTime": "設定流程規則生效日期",
+        "chooseNewProcessWay": "請選擇新流程規則生效後，舊流程規則下未執行完流程處理方式",
+        "notNow": "暫不設定生效日期",
+        "oldReleaseTime": "舊發佈日期：",
+        "newReleaseTime": "新發佈日期："
+    },
+    "ruleSetting": {
+        "unnamed": "未命名規則名稱",
+        "ruleType": "規則類型",
+        "ruleName": "規則名稱",
+        "ruleNameEdit": "編輯規則名稱",
+        "ruleByProSign": "一般簽核",
+        "ruleByPattern": "表單條件指派",
+        "ruleByOrg": "指派組織人員",
+        "ruleByArt": "讀取欄位成員",
+        "ruleBySign": "會簽",
+        "ruleByCreateProcess": "觸發流程",
+        "ruleDesc": "❶ 一般簽核：選擇職務、部門進行單一負責人簽核。\n❷ 表單條件指派：指定表單欄位數值條件，在不同的條件下，讓不同的成員進行簽核。(若條件為空白，表示條件恆定成立)。\n❸ 指派組織人員：選擇成員、職務、部門分別簽核。\n❹ 讀取欄位成員：讀取表單欄位成員進行簽核。\n❺ 會簽：選擇職務、部門進行共同簽核，分成並會和並簽兩種形式。\n❻ 觸發流程：選擇職務、部門啟動新流程，並處理資料拋轉。\n",
+        "cssignDesc": "❶ 全員簽核制: 全員需簽核過才判定簽核結果。\n❷ 最速簽核制: 若簽核當下滿足『同意』權重即視為『同意』，結束並簽。\n❸ 單一否決制: 允許單一簽核人員選擇『不同意』即結束並簽。\n❹ 同意比例制: 若簽核當下滿足『同意』權重即視為『同意』，結束並簽；否則須等全員簽核完畢才判定為『不同意』。\n❺ 駁回比例制: 若簽核當下滿足『不同意』權重即視為『不同意』，結束並簽；否則須等全員簽核完畢才判定為『同意』。\n❻ 同意人數制: 若簽核當下滿足『同意人數』即視為『同意』，結束並簽；否則須等全員簽核完畢才判定為『不同意』。\n❼ 不同意人數制: 若簽核當下滿足『不同意人數』即視為『不同意』，結束並簽；否則須等全員簽核完畢才判定為『同意』。",
+        "cssignSetWeightWithAgree": "設置簽核結果為「同意」人數佔比",
+        "cssignSetWeightWithDisagree": "設置簽核結果為「不同意」人數佔比",
+        "cssignSetWeightWithAgreePeople": "設置簽核結果為「同意」的人數",
+        "cssignSetWeightWithDisagreePeople": "設置簽核結果為「不同意」的人數",
+        "patternSetting": "設定簽核條件",
+        "setSignMember": "設定簽核人員",
+        "setSignMemberAs": "設定簽核人員為",
+        "setCsSignMemberAs": "設定會簽人員為",
+        "signPattern": "簽核條件",
+        "searchFormItem": "請選擇表單欄位名稱",
+        "setOperationSymbol": "請選擇運算符號",
+        "operationSymbolDesc": "運算符號說明",
+        "operationSymbol": "邏輯運算符",
+        "artItemSetting": "設定欄位條件",
+        "roleSetting": "職務設定",
+        "assignPolicy": "分派方式",
+        "setAssignPolicy": "設定分派方式",
+        "pickJobPolicy": "認領工作方式",
+        "signType": "會簽形式",
+        "setSignType": "設定會簽形式",
+        "csaudit": "並會",
+        "cssign": "並簽",
+        "addRule": "新增規則",
+        "pleaseAddRule": "請點擊「新增規則」開始設定",
+        "versionRevert": "恢復版本數據",
+        "versionRevertDesc": "您確定要恢復原流程規則數據嗎？\n一旦恢復，將覆蓋您當前編輯內容。",
+        "realSignRole": "實際簽核職務",
+        "projectRole": "專案職務",
+        "chooseRoleType": "請選擇職務類型",
+        "csSignPeople": "人",
+        "signLevel": "設定簽核層級",
+        "orgRole": "公司職務",
+        "process": "流程指定",
+        "ArtAttr": "文件屬性指定",
+        "artFormItem": "表單欄位名稱",
+        "pleaseAddRuleAndSave": "請先新增規則並儲存",
+        "placeholder": {
+            "ruleType": "選擇規則類型",
+            "ruleName": "自定義名稱，如：主管審核",
+            "chooseCssignCondition": "請選擇並簽完成條件",
+            "cssignCondition": "並簽完成條件",
+            "patternSetting": "請設定簽核條件",
+            "setSignMember": "簽核人員",
+            "searchFormItem": "請輸入欄位名稱",
+            "artItemSetting": "請選擇欄位條件內容",
+            "pickJobPolicy": "選擇認領方式",
+            "chooseRuleName": "請先選擇規則名稱",
+            "roleType": "職務類型",
+            "setCsSignMember": "會簽人員",
+            "artFormItem": "請先選擇欄位名稱"
+        },
+        "validator": {
+            "pattern1": "「表單欄位」和「表單欄位」之間必須由「邏輯運算符號」連結，須如：ListItem1 > 100 && ListItem2 >= 500。",
+            "pattern2": "「邏輯運算符號」的下一個連結必須為「表單欄位」或「左括弧 \" ) \"」。",
+            "pattern3": "「右括弧 \" ) \"」 的下一個連結必須為「邏輯運算符號」。",
+            "pattern4": "簽核條件的結尾不能是「邏輯運算符號」",
+            "pattern5": "括號須完整，須如： ( ) 。",
+            "pattern6": "「表單欄位」輸入條件值不得包含特殊字元符號。",
+            "pattern7": "「表單欄位」輸入條件值需為 true 或 false。"
+        },
+        "check": {
+            "member": "請設定簽核人員",
+            "assignPolicy": "請選擇分派方式",
+            "queueType": "請選擇認領工作方式",
+            "itemId": "請設定欄位條件",
+            "csSignMember": "請設定會簽人員",
+            "cssignCond": "請設定並簽完成條件",
+            "createProAppendCreatePro": "觸發流程規則不可接續觸發流程規則"
+        },
+        "submitMessage": {
+            "nameLimit": "名稱長度限制為 30"
+        },
+        "createProcess": {
+            "openDTEditorErrorMsg": "欲觸發的流程設計有錯誤",
+            "beCreated": "欲觸發的流程",
+            "cpStartMember": "觸發流程啟動者",
+            "endCond": "執行完成條件",
+            "dataTransferSetting": "資料拋出與拋回格式設定",
+            "dataThrowOut": "資料拋出格式",
+            "dataThrowBack": "資料拋回格式",
+            "noDataTransfer": "未設定資料拋轉格式",
+            "endCondAll": "全部",
+            "endCondAny": "任一",
+            "endCondNone": "不等",
+            "switchOn": "啟動",
+            "switchOff": "不啟動",
+            "selectCreatePro": "請選擇欲觸發的流程",
+            "startMember": "啟動成員",
+            "completeCond": "完成條件",
+            "dataTransfer": {
+                "title": "設定資料拋出格式",
+                "name": "資料拋轉格式名稱",
+                "srcArt": "來源文件",
+                "srcArtTip": "查看來源文件表單",
+                "dstArt": "目的文件",
+                "dstArtTip": "查看目的文件表單",
+                "emptyItems": "表格中沒有相符的資料",
+                "orderTip": "排序遞增規則依序為數字[0-9]、小寫英文[a-z]、大寫英文[A-Z]、中文筆畫[少-多]，反之則為遞減",
+                "dstCompTip": "對應關係設置方式\n1. 拖曳來源文件欄位至目標文件列上放開，可插入來源文件欄位至對應關係尾端\n2. 點擊目的文件列的對應關係欄位進入編輯模式。 輸入 $ 文字或點擊 $ 按鈕開啟來源文件欄位列表，點選列表項目可插入項目至編輯框游標位置。也可輸入常數\n3. 表單表格不可被選取\n4. 欄位拋表格特殊情況附註說明，當被觸發流程的啟動者多人時，觸發流程拋回資料時是多條紀錄。\n",
+                "clearAll": "清空",
+                "clearAllMsg": "「對應關係」欄位已有資料存在，一旦刪除不可恢復。",
+                "sortASC": "筆畫遞增",
+                "sortDESC": "筆畫遞減",
+                "search": "搜尋表單欄位",
+                "tableColumn1": "表單欄位列表",
+                "tableColumn2": "對應關係",
+                "nameNoName": "未命名資料拋轉格式名稱",
+                "errNameDuplicate": "資料拋轉格式名稱重複，請修改。",
+                "nameTo": "拋轉至"
+            }
+        }
+    },
+    "advanceFormSetting": {
+        "copySetting": "複製設定",
+        "chooseCopy": "請選擇要複製的條件規則資料設定",
+        "formPreview": "表單預覽",
+        "itemName": "欄位名稱",
+        "placeholder": {
+            "itemName": "搜尋欄位名稱"
+        },
+        "submitMessage": {
+            "success": "複製設定資料取得成功",
+            "error1": "複製設定資料取得成功，但設定異常",
+            "error2": "複製設定資料取得異常",
+            "error3": "請選擇複製設定資料"
+        }
+    },
+    "conditionImport": {
+        "chooseCondition": "請選擇您要載入的流程條件及規則",
+        "importCondition": "載入條件",
+        "condition": "條件",
+        "placeholder": {
+            "searchKeyword": "請輸入您要搜尋的關鍵字"
+        }
+    },
+    "conditionSetting": {
+        "unnamed": "未命名條件名稱",
+        "chooseConditionName": "請選擇條件名稱",
+        "conditionName": "條件名稱",
+        "addCondition": "新增條件",
+        "copyCondition": "複製條件",
+        "clickAndAdd": "請點擊新增條件開始設定",
+        "automaticSimulation": "自動模擬",
+        "manualSimulation": "手動模擬",
+        "singleSimulation": "單次模擬",
+        "batchSimulation": "批次模擬",
+        "loadingConditions": "載入條件",
+        "pleaseAddStateAndSave": "請先新增條件並儲存",
+        "placeholder": {
+            "relationship": "條件關係",
+            "itemType": "項目類型",
+            "operation": "條件運算",
+            "equalsHold": "當簽核條件為空時，表示條件恆成立。",
+            "chooseConditionName": "選擇規則類型",
+            "conditionName": "自定義名稱，例如採購成本<=1000"
+        },
+        "submitMessage": {
+            "warn": "請先儲存條件",
+            "conditionNameEmpty": "條件名稱不得為空",
+            "conditionNameDuplicate": "條件名稱重複",
+            "checkfail": "條件檢查失敗",
+            "nameLimit": "名稱長度限制為 30"
+        }
+    },
+    "notifyRuleSetting": {
+        "expire": "完成期限",
+        "expiredSetting": "完成期限設定",
+        "expireNotifySetting": "逾期提醒設定",
+        "beforeAndNotifyPolicy": "前提醒，且提醒方式為",
+        "notifyPolicySetting": "通知方式設定",
+        "notifyByMail": "流程到達時，以 Email 通知，郵件格式為",
+        "chooseCopyConditionAndNotify": "請選擇要複製的條件規則通知期限設定",
+        "noLimit": "不限定期限",
+        "limit": "限定期限",
+        "defaultJobNotifyTitle": "系統預設工作通知",
+        "placeholder": {
+            "notifySetting": "請選擇設置提醒"
+        },
+        "submitMessage": {
+            "chooseRule": "未選擇規則",
+            "success": "設定成功",
+            "error": "複製設定資料取得異常"
+        }
+    },
+    "singleSimulation": {
+        "chooseProcessExecutor": "選擇流程執行人員",
+        "configSetting": "請設置流程條件參數",
+        "configMessage": "填寫流程條件參數後，請點擊「確認」按鈕， 以便系統判定此次模擬滿足的條件並 自動匹配該條件下的規則參數，方便您後續的模擬操作。",
+        "configProcessSetting": "請設置流程規則參數",
+        "configItemMember": "請設置欄位成員",
+        "showResult": "簽核模擬結果顯示",
+        "chooseExecutor": "選擇執行人員",
+        "chooseExecutorAs": "選擇執行人員為",
+        "chooseItemMember": "選擇欄位成員",
+        "itemValue": "欄位值",
+        "satisfy1": "根據您輸入的條件參數值，我們判定滿足",
+        "satisfy2": "，系統已自動為您匹配好該條件下的規則參數，您可以繼續完成後續的模擬操作。",
+        "simulationFail": "執行模擬失敗，請確認測試資料填寫是否正確!",
+        "simulationFail1": "執行模擬異常，系統錯誤，請聯繫系統管理員!"
+    },
+    "versionControl": {
+        "batchMode": "批次模式",
+        "modifyAndAnnounce": "修改發佈",
+        "saveAnotherVersion": "另存新版",
+        "submitMessage": {
+            "deleteConfirmMessage": "您確定要刪除此流程版本嗎？\n一旦刪除不可恢復。",
+            "deleteSelectedConfirmMessage": "您確定要刪除勾選的流程版本嗎？\n一旦刪除不可恢復。",
+            "saveAnotherVersionSuccess": "另存新版成功，請至版本管理頁面查看",
+            "saveAnotherVersionError": "另存新版失敗，請聯繫系統管理員!"
+        }
+    },
+    "processNode": {
+        "executor": "執行人員",
+        "order": "順序",
+        "artItem": "欄位條件",
+        "csignMember": "會簽人員",
+        "createProcess": "觸發流程",
+        "initialMember": "啟動者",
+        "endCondtion": "執行完成條件"
+    },
+    "assignPolicy": {
+        "random": "任意指派一人執行",
+        "queue": "佇列"
+    },
+    "jobPickPolicy": {
+        "active": "開啟表單即認領工作",
+        "passive": "開啟表單並確認後才認領工作"
+    },
+    "cssignOptions": {
+        "fullstaffsign": "全員簽核制",
+        "quicksign": "最速簽核制",
+        "onedisagree": "單一否決制",
+        "agreeratio": "同意比例制",
+        "disagreeratio": "駁回比例制",
+        "agreemember": "同意人數制",
+        "disagreemember": "不同意人數制"
+    },
+    "org": {
+        "chooseCompany": "選擇公司",
+        "returnOrgList": "返回組織",
+        "return": "返回",
+        "noResult": "搜尋無結果",
+        "searchResult": "組織搜尋結果",
+        "member": "人員",
+        "role": "職務",
+        "department": "部門",
+        "uuid": "編號",
+        "showName": "名稱",
+        "selected": "已選",
+        "chooseMember": "選擇組織人員",
+        "tip": "提示：",
+        "tipMessage": "「已選」欄位只能選擇一項，勾選簽核選項後會直接替換欄位資料。",
+        "placeholder": {
+            "chooseMember": "請選擇人員",
+            "defaultSearch": "搜尋的關鍵字可以是 「部門 、 職位 、 人員名稱」"
+        }
+    },
+    "duration": {
+        "day": "天",
+        "hour": "時",
+        "minute": "分",
+        "placeholder": {
+            "chooseTime": "請選擇時間"
+        }
+    },
+    "common": {
+        "viewportMessage1": "為了更好的體驗，",
+        "viewportMessage2": "我們建議您在電腦或較大尺寸螢幕上瀏覽。",
+        "apply": "套用",
+        "warning": "警告",
+        "edit": "編輯",
+        "confirm": "確定",
+        "reset": "重置",
+        "abort": "取消",
+        "ok": "好的",
+        "and": "且",
+        "and1": "並且",
+        "or": "或",
+        "or1": "或者",
+        "save": "儲存",
+        "visible": "可見",
+        "required": "必填",
+        "import": "載入",
+        "announce": "發布",
+        "more": "更多",
+        "execute": "執行",
+        "delete": "刪除",
+        "deleteVersion": "刪除版本",
+        "start": "開始",
+        "end": "結束",
+        "search": "搜尋",
+        "noResult": "查無此頁面，請重新搜尋",
+        "noData": "尚未建立資料",
+        "submitMessage": {
+            "saveSuccess": "儲存成功",
+            "saveFail": "儲存失敗",
+            "addSuccess": "新增成功",
+            "addFail": "新增失敗",
+            "copySuccess": "複製成功",
+            "copyFail": "複製失敗",
+            "deleteSuccess": "刪除成功"
+        },
+        "placeholder": {
+            "choose": "請選擇"
+        }
+    },
+    "validator": {
+        "emptyInput": "請輸入文字",
+        "digitInput": "請輸入數值",
+        "notSaving": "尚未儲存當前操作，要返回嗎？"
+    },
+    "select": {
+        "noResult": "找不到任何符合的選項，請更換成其他的搜尋條件試試",
+        "noOptions": "無任何選項"
+    },
+    "error": {
+        "system": "系統錯誤，請聯繫系統管理員"
+    },
+    "flPagination": {
+        "show": "顯示",
+        "items": "項",
+        "showNumber": "顯示第",
+        "to": "至",
+        "results": "項結果",
+        "total": "共"
+    },
+    "artifactCar": {
+        "deleteButton": "删除表單",
+        "submitMessage": {
+            "deleteConfirmMessage": "您確定要刪除此表單嗎？\n一旦刪除不可恢復。",
+            "deleteArtifactSuccess": "表單已刪除。",
+            "deleteArtifactError": "表單刪除失敗，請聯繫系統管理員!"
+        }
+    },
+    "groupSignSetting": {
+        "openGroupSign": "啟用批次簽核",
+        "allowFormAction": "允許批次簽核執行的表單動作：",
+        "signColumn": "批次簽核表單欄位",
+        "addComponent": "新增欄位",
+        "deleteComponent": "刪除欄位",
+        "tooltipMessage": "批次簽核頁面之表格及選單元件僅以唯讀呈現， 而其他元件可否編輯不受資料進階設定影響。",
+        "selectSignColumn": "選擇批次簽核表單欄位",
+        "name": "元件名稱",
+        "synopsis": "說明",
+        "title": "元件主旨",
+        "componentType": "元件型態",
+        "width": "欄寬 (%, px)",
+        "editable": "可編輯"
+    },
+    "fcomponent": {
+        "FCheckBox": "核取方塊",
+        "FComboBox": "下拉式選單",
+        "FPasswordField": "密碼",
+        "FRadioButton": "選取按鈕",
+        "FTextArea": "多列編輯框",
+        "FTextField": "單列編輯框",
+        "FLabel": "標簽",
+        "FTextFieldWithLabel": "標籤單列編輯框",
+        "FChoiceBox": "選單元件",
+        "FTableScrollPane": "表格"
+    },
+    "CalEditorComInfo": "日曆元件",
+    "alignment": {
+        "title": "對齊方式",
+        "left": "靠左",
+        "center": "置中",
+        "right": "靠右"
+    },
+    "flAt": {
+        "search": "搜尋表單欄位"
+    },
+    "flCascaderL2": {
+        "searchResult": "搜尋結果",
+        "noResult": "查無結果",
+        "selectProcess": "請選擇欲觸發的流程",
+        "prj": "所屬分類",
+        "pro": "流程名稱"
+    },
+    "exportMfpProcess": {
+        "exportProcess": "匯出流程",
+        "importProcess": "匯入流程",
+        "importProcessTitle": "流程匯入",
+        "processFile": "流程檔案",
+        "selectFile": "選擇檔案",
+        "fileName": "檔案名稱",
+        "dialogDesc": "：選擇的檔案格式為 .json ，可將測試機匯出的流程資料，匯入正式系統中。",
+        "clearFiles": "清空",
+        "click": "點擊",
+        "drag": "或將一個文件拖到此處",
+        "submitMessage": {
+            "importConfirmMessage": "您確定要匯入流程嗎？",
+            "importSuccess": "流程已匯入。",
+            "importFail": "流程匯入失敗!",
+            "exportDownloadError": "下載失敗，請確認網路是否延遲過久或異常",
+            "addFilesSuccess": "新增檔案成功",
+            "addFilesFormatError": "上傳檔案格式錯誤",
+            "haveDeleted": "已刪除",
+            "clearProFiles": "清空流程檔案",
+            "confirmClearProFiles": "您確定要清空所有的流程檔案嗎？\n一旦清空不可恢復。"
+        }
+    }
+}

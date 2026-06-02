@@ -1,0 +1,57 @@
+
+// $primary-colors: rgba(241, 239, 247, 0.8), #ccc7e3, #a89fcf, #8377bb, #6e5faf, #685aa6, #63569e, #483e72, #2c2646;
+// $secondary-colors: rgba(245, 245, 245, 0.8), #dbdbdb, #c2c2c2, #a8a8a8, #999999, #919191, #8a8a8a, #636363, #292929;
+// $info-colors: rgba(232, 241, 253, 0.8), #afcef7, #76abf1, #3c88eb, #1a73e8, #196ddc, #1767d1, #114b97, #0a2e5d;
+// $success-colors: rgba(239, 247, 240, 0.8), #c7e3cc, #9fcfa8, #77bb84, #5faf6e, #5aa668, #559d63, #3e7247, #26462c;
+// $warning-colors: rgba(253, 248, 239, 0.8), #f5e6c6, #eed49d, #e7c273, #e3b85b, #d7af56, #cda652, #94783b, #5b4a24;
+// $error-colors: rgba(252, 237, 238, 0.8), #f6c1c3, #ef9499, #e8686f, #e44d55, #d94951, #cd454c, #943237, #5b1f22;
+
+// $primary: nth($primary-colors, 5) !default;
+// $secondary: nth($secondary-colors, 5) !default;
+// $info: nth($info-colors, 5) !default;
+// $success: nth($success-colors, 5) !default;
+// $warning: nth($warning-colors, 5) !default;
+// $error: nth($error-colors, 5) !default;
+
+// $theme-colors: (
+//     'primary': $primary-colors,
+//     'secondary': $secondary-colors,
+//     'info': $info-colors,
+//     'success': $success-colors,
+//     'warning': $warning-colors,
+//     'error': $error-colors,
+// ) !default;
+
+
+// $ui-primary-colors: rgba(241, 239, 247, 0.8), #ccc7e3, #a89fcf, #6e5faf, #63569e !default;
+// $ui-secondary-colors: rgba(245, 245, 245, 0.8), #dbdbdb, #c2c2c2, #999999, #8a8a8a !default;
+// $ui-info-colors: rgba(232, 241, 253, 0.8), #afcef7, #76abf1, #1a73e8, #1767d1 !default;
+// $ui-success-colors: rgba(239, 247, 240, 0.8), #c7e3cc, #9fcfa8, #5faf6e, #559d63 !default;
+// $ui-warning-colors: rgba(253, 248, 239, 0.8), #f5e6c6, #eed49d, #e3b85b, #cda652 !default;
+// $ui-error-colors: rgba(252, 237, 238, 0.8), #f6c1c3, #ef9499, #e44d55, #cd454c !default;
+
+// $ui-primary: nth($ui-primary-colors, 4) !default;
+// $ui-secondary: nth($ui-secondary-colors, 4) !default;
+// $ui-info: nth($ui-info-colors, 4) !default;
+// $ui-success: nth($ui-success-colors, 4) !default;
+// $ui-warning: nth($ui-warning-colors, 4) !default;
+// $ui-error: nth($ui-error-colors, 4) !default;
+
+// $ui-theme-colors: (
+//     "primary": $ui-primary-colors,
+//     "secondary": $ui-secondary-colors,
+//     "info": $ui-info-colors,
+//     "success": $ui-success-colors,
+//     "warning": $ui-warning-colors,
+//     "error": $ui-error-colors,
+// ) !default;
+
+
+$colors: (
+    webiap:  rgba(241, 239, 247, 0.8), #ccc7e3, #a89fcf, #8377bb, #000, #685aa6, #63569e, #483e72, #2c2646
+);
+
+$theme: webiap;
+$theme-colors: map-get($colors, $theme);
+$theme-color: nth($theme-colors, 5);
+$ui-primary-colors: $theme-colors;
