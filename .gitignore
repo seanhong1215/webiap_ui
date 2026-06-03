@@ -1,0 +1,17 @@
+# ── 排除大型 Noto 字型（.otf，每個 5~8 MB）──────
+static/css/fonts/NotoSansSC-*.otf
+static/css/fonts/NotoSansTC-*.otf
+
+# ── FontAwesome：只保留 woff2，排除其他格式 ──────
+static/fontawesome-pro-5.13.0-web/webfonts/*.eot
+static/fontawesome-pro-5.13.0-web/webfonts/*.ttf
+static/fontawesome-pro-5.13.0-web/webfonts/*.svg
+static/fontawesome-pro-5.13.0-web/webfonts/*.woff
+
+# ── FontAwesome 非必要資源 ────────────────────────
+static/fontawesome-pro-5.13.0-web/js/
+static/fontawesome-pro-5.13.0-web/sprites/
+static/fontawesome-pro-5.13.0-web/metadata/
+static/fontawesome-pro-5.13.0-web/less/
+static/fontawesome-pro-5.13.0-web/scss/
+static/fontawesome-pro-5.13.0-web/svgs/
