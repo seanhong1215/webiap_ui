@@ -436,7 +436,7 @@ $reject: #e44d55;
 
 .appr-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
     flex-shrink: 0;
 }

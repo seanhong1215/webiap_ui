@@ -86,7 +86,7 @@
                     <div class="top-user">
                         <div class="user-avatar-sm">{{ userAvatar }}</div>
                         <span>{{ userName }}</span>
-                        <span v-if="isAdmin" class="role-badge">管理員</span>
+                        <!-- <span v-if="isAdmin" class="role-badge">管理員</span> -->
                     </div>
                     <button class="logout-btn" title="登出" @click="logout">
                         <i class="ti ti-logout"></i>

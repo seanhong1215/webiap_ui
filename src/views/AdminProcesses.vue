@@ -703,7 +703,7 @@ $accent: #6e5faf;
 // ── Process Grid ──────────────────────────────────
 .process-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
 }
 
