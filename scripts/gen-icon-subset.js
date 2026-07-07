@@ -8,6 +8,7 @@ const USED = [...new Set([
     'file-text','file-pencil','file-invoice','filter','hash','history','hourglass','inbox','info-circle','stack-2',
     'bulb','map-pin','network','send','plus','receipt','refresh','rocket','route','search','login','logout','sitemap',
     'loader-2','rubber-stamp','timeline','gauge','tag','layout-grid','x','circle-x','trash','beach','user','user-check',
+    'menu-2',
 ])].sort();
 
 const css = fs.readFileSync('node_modules/@tabler/icons-webfont/tabler-icons.css', 'utf8');

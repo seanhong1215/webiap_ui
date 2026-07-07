@@ -261,6 +261,10 @@ $accent: #6e5faf;
     grid-template-columns: 1fr 320px;
     gap: 16px;
     align-items: start;
+
+    @media (max-width: 820px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .fd-main {

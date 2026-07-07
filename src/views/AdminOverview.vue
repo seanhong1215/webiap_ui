@@ -207,7 +207,7 @@ $accent: #6e5faf;
 // ── Stats Grid ────────────────────────────────────
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
 }
 
@@ -288,6 +288,10 @@ $accent: #6e5faf;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .panel {

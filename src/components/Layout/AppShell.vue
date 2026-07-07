@@ -1,7 +1,10 @@
 <template>
     <div class="app-shell">
+        <!-- 手機側邊欄遮罩 -->
+        <div v-if="mobileOpen" class="sidebar-backdrop" @click="mobileOpen = false"></div>
+
         <!-- Sidebar -->
-        <aside class="sidebar" :class="{ collapsed: sidebarCollapsed }">
+        <aside class="sidebar" :class="{ collapsed: sidebarCollapsed, 'mobile-open': mobileOpen }">
             <div class="sidebar-brand" @click="$router.push({ name: 'Dashboard' })">
                 <div class="brand-icon"><i class="ti ti-network"></i></div>
                 <div v-show="!sidebarCollapsed" class="brand-text">
@@ -75,6 +78,9 @@
         <!-- Main Content -->
         <div class="main-area">
             <header class="top-bar">
+                <button class="menu-btn" aria-label="開啟選單" @click="mobileOpen = true">
+                    <i class="ti ti-menu-2"></i>
+                </button>
                 <div class="page-title">{{ pageTitle }}</div>
                 <div class="top-bar-actions">
                     <div class="top-user">
@@ -102,8 +108,15 @@ export default {
     data() {
         return {
             sidebarCollapsed: false,
+            mobileOpen: false,
             pendingCount: MOCK_PENDING_APPROVALS.length,
         };
+    },
+    watch: {
+        // 換頁後自動收起手機抽屜
+        $route() {
+            this.mobileOpen = false;
+        },
     },
     computed: {
         ...mapGetters('user', ['currentUser', 'isAdmin']),
@@ -455,6 +468,83 @@ $bg: #f4f5f9;
 
     & > * {
         max-width: 1200px;
+    }
+}
+
+// 手機選單鈕與遮罩(桌機隱藏)
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #5c6466;
+    cursor: pointer;
+    margin-right: 4px;
+    padding: 4px;
+    align-items: center;
+}
+.sidebar-backdrop {
+    display: none;
+}
+
+// ── RWD:平板 ─────────────────────────────────────
+@media (max-width: 1024px) {
+    .content-area {
+        padding: 20px 20px;
+    }
+}
+
+// ── RWD:手機 —— 側邊欄改為滑出式抽屜 ─────────────
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 300;
+        // 手機一律展開為完整抽屜(忽略桌機的收合狀態)
+        width: $sidebar-width;
+        min-width: $sidebar-width;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+
+        &.mobile-open {
+            transform: translateX(0);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .nav-label,
+        .brand-text,
+        .nav-section-label,
+        .user-info {
+            display: block !important; // 抽屜內固定顯示文字
+        }
+        .collapse-btn {
+            display: none; // 手機不需桌機收合鈕
+        }
+    }
+
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 250;
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    .menu-btn {
+        display: flex;
+    }
+
+    .content-area {
+        padding: 16px 14px;
+    }
+
+    .top-bar {
+        padding: 0 14px;
+        .top-user span {
+            display: none; // 手機只留頭像
+        }
     }
 }
 </style>

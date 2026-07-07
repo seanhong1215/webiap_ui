@@ -591,6 +591,10 @@ $reject: #e44d55;
     gap: 12px;
     margin-bottom: 20px;
 
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+
     .info-item {
         background: #fafafa;
         border-radius: 8px;

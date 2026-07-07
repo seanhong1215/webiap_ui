@@ -292,7 +292,7 @@ $accent: #6e5faf;
 // ── Summary Bar ───────────────────────────────────
 .summary-bar {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 14px;
 }
 
@@ -405,11 +405,12 @@ $accent: #6e5faf;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(72, 62, 114, 0.07);
-    overflow: hidden;
+    overflow-x: auto; // 窄螢幕時表格可橫向捲動
 }
 
 .records-table {
     width: 100%;
+    min-width: 720px;
     border-collapse: collapse;
 
     thead tr {
@@ -509,6 +510,11 @@ $accent: #6e5faf;
     grid-template-columns: 1fr 1fr;
     gap: 0;
     padding: 20px 24px;
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
 }
 
 .detail-section {

@@ -248,7 +248,7 @@ $accent: #6e5faf;
 // ── Stats Row ─────────────────────────────────────
 .stat-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
     margin-bottom: 20px;
 }
@@ -259,6 +259,10 @@ $accent: #6e5faf;
     grid-template-columns: 1fr 380px;
     gap: 16px;
     align-items: start;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr; // 窄螢幕改為單欄堆疊
+    }
 }
 
 .right-col {

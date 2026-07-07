@@ -1,4 +1,4 @@
-/* Tabler Icons 子集(僅本專案使用的 61 個圖示)
+/* Tabler Icons 子集(僅本專案使用的 62 個圖示)
  * 由 @tabler/icons-webfont 2.47.0 子集化而來 · MIT License
  * 重新產生: 見 scripts/build-icon-font.md
  */
@@ -148,6 +148,9 @@
 }
 .ti-map-pin:before {
     content: '\eae8';
+}
+.ti-menu-2:before {
+    content: '\ec42';
 }
 .ti-network:before {
     content: '\f09f';
