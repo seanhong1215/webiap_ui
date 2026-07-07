@@ -13,7 +13,7 @@
 // ─────────────────────────────────────────────────
 export const MOCK_USERS = [
     { id: 'U001', account: 'user', password: '123456', name: '王小明', dept: '人力資源部', role: 'user', avatar: '王' },
-    { id: 'A001', account: 'admin', password: 'admin', name: '李管理員', dept: '資訊管理部', role: 'admin', avatar: '李' },
+    { id: 'A001', account: 'admin', password: 'admin', name: '管理員', dept: '資訊管理部', role: 'admin', avatar: '管' },
 ];
 
 export const MOCK_CATEGORIES = {

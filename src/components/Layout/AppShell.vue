@@ -112,12 +112,6 @@ export default {
             pendingCount: MOCK_PENDING_APPROVALS.length,
         };
     },
-    watch: {
-        // 換頁後自動收起手機抽屜
-        $route() {
-            this.mobileOpen = false;
-        },
-    },
     computed: {
         ...mapGetters('user', ['currentUser', 'isAdmin']),
         userName() {
@@ -143,6 +137,12 @@ export default {
                 AdminRecords: '申請記錄',
             };
             return titleMap[this.$route.name] || 'FlowRing';
+        },
+    },
+    watch: {
+        // 換頁後自動收起手機抽屜
+        $route() {
+            this.mobileOpen = false;
         },
     },
     methods: {

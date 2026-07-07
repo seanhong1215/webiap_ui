@@ -51,103 +51,129 @@
 
         <!-- Records Table -->
         <div class="table-wrapper">
-            <table class="records-table">
-                <thead>
-                    <tr>
-                        <th class="col-expand"></th>
-                        <th class="col-serial">序號</th>
-                        <th class="col-person">申請人</th>
-                        <th class="col-dept">部門</th>
-                        <th class="col-flow">流程名稱</th>
-                        <th class="col-status">狀態</th>
-                        <th class="col-date">申請時間</th>
-                        <th class="col-step">目前步驟</th>
-                    </tr>
-                </thead>
-                <tbody v-if="paginatedRecords.length > 0">
-                    <template v-for="rec in paginatedRecords" :key="rec.id">
-                        <!-- Main Row -->
-                        <tr
-                            class="record-row"
-                            :class="{ expanded: expandedId === rec.id, [`status-${rec.status}`]: true }"
-                            @click="toggleExpand(rec.id)"
-                        >
-                            <td class="col-expand">
-                                <i
-                                    class="ti"
-                                    :class="expandedId === rec.id ? 'ti-chevron-down' : 'ti-chevron-right'"
-                                    style="color: #c9c2e8; font-size: 11px"
-                                ></i>
-                            </td>
-                            <td class="mono">{{ rec.serialNo }}</td>
-                            <td>
-                                <div class="person-cell">
-                                    <div class="person-avatar">{{ rec.submitterName[0] }}</div>
-                                    {{ rec.submitterName }}
-                                </div>
-                            </td>
-                            <td class="dept-cell">{{ rec.submitterDept }}</td>
-                            <td>{{ rec.formName }}</td>
-                            <td>
-                                <StatusBadge variant="submission" :value="rec.status" />
-                            </td>
-                            <td class="date-cell">{{ rec.submittedAt }}</td>
-                            <td class="step-cell">{{ rec.currentStep }}</td>
-                        </tr>
+            <!-- 載入中:骨架列 -->
+            <div v-if="loading" class="skeleton-rows">
+                <div v-for="n in 8" :key="n" class="skeleton-row">
+                    <Skeleton width="16px" height="16px" radius="4px" />
+                    <Skeleton width="110px" />
+                    <Skeleton width="80px" />
+                    <Skeleton width="70px" />
+                    <Skeleton width="150px" />
+                    <Skeleton width="64px" height="20px" radius="12px" />
+                    <Skeleton width="80px" />
+                </div>
+            </div>
 
-                        <!-- Expanded Detail Row -->
-                        <tr v-if="expandedId === rec.id" class="detail-row">
-                            <td colspan="8">
-                                <div class="detail-content">
-                                    <!-- Form Data -->
-                                    <div class="detail-section">
-                                        <div class="detail-section-title"><i class="ti ti-file-text"></i> 表單內容</div>
-                                        <div class="form-grid">
-                                            <div v-for="(val, key) in rec.formData" :key="key" class="form-field">
-                                                <div class="field-key">{{ key }}</div>
-                                                <div class="field-val">{{ val }}</div>
+            <!-- 載入失敗 -->
+            <EmptyState v-else-if="error" icon="circle-x" title="資料載入失敗" hint="請稍後再試一次">
+                <button class="retry-btn" @click="reload"><i class="ti ti-refresh"></i> 重新載入</button>
+            </EmptyState>
+
+            <!-- 載入完成 -->
+            <template v-else>
+                <table class="records-table">
+                    <thead>
+                        <tr>
+                            <th class="col-expand"></th>
+                            <th class="col-serial">序號</th>
+                            <th class="col-person">申請人</th>
+                            <th class="col-dept">部門</th>
+                            <th class="col-flow">流程名稱</th>
+                            <th class="col-status">狀態</th>
+                            <th class="col-date">申請時間</th>
+                            <th class="col-step">目前步驟</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="paginatedRecords.length > 0">
+                        <template v-for="rec in paginatedRecords" :key="rec.id">
+                            <!-- Main Row -->
+                            <tr
+                                class="record-row"
+                                :class="{ expanded: expandedId === rec.id, [`status-${rec.status}`]: true }"
+                                @click="toggleExpand(rec.id)"
+                            >
+                                <td class="col-expand">
+                                    <i
+                                        class="ti"
+                                        :class="expandedId === rec.id ? 'ti-chevron-down' : 'ti-chevron-right'"
+                                        style="color: #c9c2e8; font-size: 11px"
+                                    ></i>
+                                </td>
+                                <td class="mono">{{ rec.serialNo }}</td>
+                                <td>
+                                    <div class="person-cell">
+                                        <div class="person-avatar">{{ rec.submitterName[0] }}</div>
+                                        {{ rec.submitterName }}
+                                    </div>
+                                </td>
+                                <td class="dept-cell">{{ rec.submitterDept }}</td>
+                                <td>{{ rec.formName }}</td>
+                                <td>
+                                    <StatusBadge variant="submission" :value="rec.status" />
+                                </td>
+                                <td class="date-cell">{{ rec.submittedAt }}</td>
+                                <td class="step-cell">{{ rec.currentStep }}</td>
+                            </tr>
+
+                            <!-- Expanded Detail Row -->
+                            <tr v-if="expandedId === rec.id" class="detail-row">
+                                <td colspan="8">
+                                    <div class="detail-content">
+                                        <!-- Form Data -->
+                                        <div class="detail-section">
+                                            <div class="detail-section-title"><i class="ti ti-file-text"></i> 表單內容</div>
+                                            <div class="form-grid">
+                                                <div v-for="(val, key) in rec.formData" :key="key" class="form-field">
+                                                    <div class="field-key">{{ key }}</div>
+                                                    <div class="field-val">{{ val }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Approval Steps -->
-                                    <div class="detail-section">
-                                        <div class="detail-section-title"><i class="ti ti-timeline"></i> 審核軌跡</div>
-                                        <div class="steps-timeline">
-                                            <div
-                                                v-for="step in rec.steps"
-                                                :key="step.name"
-                                                class="step-item"
-                                                :class="`step--${step.status}`"
-                                            >
-                                                <div class="step-connector"></div>
-                                                <div class="step-dot"></div>
-                                                <div class="step-body">
-                                                    <div class="step-header">
-                                                        <span class="step-name">{{ step.name }}</span>
-                                                        <span class="step-actor">{{ step.actor }}</span>
-                                                    </div>
-                                                    <div class="step-meta">
-                                                        <span>{{ step.date || '待處理' }}</span>
-                                                        <span v-if="step.remark" class="step-remark">· {{ step.remark }}</span>
+                                        <!-- Approval Steps -->
+                                        <div class="detail-section">
+                                            <div class="detail-section-title"><i class="ti ti-timeline"></i> 審核軌跡</div>
+                                            <div class="steps-timeline">
+                                                <div
+                                                    v-for="step in rec.steps"
+                                                    :key="step.name"
+                                                    class="step-item"
+                                                    :class="`step--${step.status}`"
+                                                >
+                                                    <div class="step-connector"></div>
+                                                    <div class="step-dot"></div>
+                                                    <div class="step-body">
+                                                        <div class="step-header">
+                                                            <span class="step-name">{{ step.name }}</span>
+                                                            <span class="step-actor">{{ step.actor }}</span>
+                                                        </div>
+                                                        <div class="step-meta">
+                                                            <span>{{ step.date || '待處理' }}</span>
+                                                            <span v-if="step.remark" class="step-remark">· {{ step.remark }}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </template>
-                </tbody>
-            </table>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
 
-            <!-- Empty State -->
-            <EmptyState v-if="filteredRecords.length === 0" icon="search" title="查無符合條件的申請記錄" hint="調整篩選條件或清除搜尋" />
+                <!-- Empty State -->
+                <EmptyState
+                    v-if="filteredRecords.length === 0"
+                    icon="search"
+                    title="查無符合條件的申請記錄"
+                    hint="調整篩選條件或清除搜尋"
+                />
+            </template>
         </div>
 
         <!-- Pagination -->
-        <div v-if="totalPages > 1" class="pagination-bar">
+        <div v-if="!loading && !error && totalPages > 1" class="pagination-bar">
             <button class="pag-btn" :disabled="currentPage === 1" @click="currentPage--">
                 <i class="ti ti-chevron-left"></i>
             </button>
@@ -164,12 +190,19 @@ import { MOCK_ADMIN_RECORDS, MOCK_CATEGORIES } from '@/utils/mockData';
 import StatCard from '@/components/ui/StatCard.vue';
 import StatusBadge from '@/components/ui/StatusBadge.vue';
 import EmptyState from '@/components/ui/EmptyState.vue';
+import Skeleton from '@/components/ui/Skeleton.vue';
+import { useAsyncData } from '@/composables/useAsyncData';
 
 const PAGE_SIZE = 8;
 
 export default {
     name: 'AdminRecords',
-    components: { StatCard, StatusBadge, EmptyState },
+    components: { StatCard, StatusBadge, EmptyState, Skeleton },
+    // 以 useAsyncData 載入基礎資料,提供 loading / error / data 三態
+    setup() {
+        const { data: records, loading, error, reload } = useAsyncData(() => [...MOCK_ADMIN_RECORDS], { delay: 700 });
+        return { records, loading, error, reload };
+    },
     data() {
         return {
             filterStatus: '',
@@ -183,7 +216,7 @@ export default {
     },
     computed: {
         summaryStats() {
-            const all = MOCK_ADMIN_RECORDS;
+            const all = this.records || [];
             return [
                 { key: '', label: '全部記錄', count: all.length, icon: 'clipboard-list', color: '#6e5faf', bg: '#f0eeff' },
                 {
@@ -213,13 +246,13 @@ export default {
             ];
         },
         uniqueDepts() {
-            return [...new Set(MOCK_ADMIN_RECORDS.map((r) => r.submitterDept))].sort();
+            return [...new Set((this.records || []).map((r) => r.submitterDept))].sort();
         },
         hasFilter() {
             return !!(this.filterStatus || this.filterCategory || this.filterDept || this.searchText);
         },
         filteredRecords() {
-            let list = MOCK_ADMIN_RECORDS;
+            let list = this.records || [];
             if (this.filterStatus) list = list.filter((r) => r.status === this.filterStatus);
             if (this.filterCategory) list = list.filter((r) => r.category === this.filterCategory);
             if (this.filterDept) list = list.filter((r) => r.submitterDept === this.filterDept);
@@ -696,6 +729,35 @@ $accent: #6e5faf;
     .pag-info {
         font-size: 13px;
         color: #888;
+    }
+}
+
+// ── 載入骨架 / 錯誤重試 ────────────────────────────
+.skeleton-rows {
+    padding: 8px 0;
+}
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f4f4f7;
+}
+.retry-btn {
+    margin-top: 14px;
+    background: $accent;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    &:hover {
+        opacity: 0.9;
     }
 }
 </style>
