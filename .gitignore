@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-
+/coverage
 
 # local env files
 .env.local
@@ -22,6 +22,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-prettierrc.json
-*.gitignore
+# 授權字型(Font Awesome Pro)不進版控
 public/static/fontawesome-pro-5.13.0-web/

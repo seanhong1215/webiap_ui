@@ -3,9 +3,9 @@
         <!-- Summary Bar -->
         <div class="summary-bar">
             <div
-                class="summary-card"
                 v-for="s in summaryStats"
                 :key="s.key"
+                class="summary-card"
                 :class="{ active: filterStatus === s.key }"
                 @click="toggleStatusFilter(s.key)"
             >
@@ -42,9 +42,7 @@
                     <input v-model="searchText" placeholder="申請人、序號或流程名稱" />
                 </div>
             </div>
-            <button class="btn-reset" @click="resetFilters" v-if="hasFilter">
-                <i class="fal fa-times"></i> 重設篩選
-            </button>
+            <button v-if="hasFilter" class="btn-reset" @click="resetFilters"><i class="fal fa-times"></i> 重設篩選</button>
         </div>
 
         <!-- Records Count -->
@@ -77,7 +75,11 @@
                             @click="toggleExpand(rec.id)"
                         >
                             <td class="col-expand">
-                                <i class="fal" :class="expandedId === rec.id ? 'fa-chevron-down' : 'fa-chevron-right'" style="color: #c9c2e8; font-size: 11px;"></i>
+                                <i
+                                    class="fal"
+                                    :class="expandedId === rec.id ? 'fa-chevron-down' : 'fa-chevron-right'"
+                                    style="color: #c9c2e8; font-size: 11px"
+                                ></i>
                             </td>
                             <td class="mono">{{ rec.serialNo }}</td>
                             <td>
@@ -103,11 +105,9 @@
                                 <div class="detail-content">
                                     <!-- Form Data -->
                                     <div class="detail-section">
-                                        <div class="detail-section-title">
-                                            <i class="fal fa-file-alt"></i> 表單內容
-                                        </div>
+                                        <div class="detail-section-title"><i class="fal fa-file-alt"></i> 表單內容</div>
                                         <div class="form-grid">
-                                            <div class="form-field" v-for="(val, key) in rec.formData" :key="key">
+                                            <div v-for="(val, key) in rec.formData" :key="key" class="form-field">
                                                 <div class="field-key">{{ key }}</div>
                                                 <div class="field-val">{{ val }}</div>
                                             </div>
@@ -116,14 +116,12 @@
 
                                     <!-- Approval Steps -->
                                     <div class="detail-section">
-                                        <div class="detail-section-title">
-                                            <i class="fal fa-stream"></i> 審核軌跡
-                                        </div>
+                                        <div class="detail-section-title"><i class="fal fa-stream"></i> 審核軌跡</div>
                                         <div class="steps-timeline">
                                             <div
-                                                class="step-item"
                                                 v-for="step in rec.steps"
                                                 :key="step.name"
+                                                class="step-item"
                                                 :class="`step--${step.status}`"
                                             >
                                                 <div class="step-connector"></div>
@@ -149,14 +147,14 @@
             </table>
 
             <!-- Empty State -->
-            <div class="empty-state" v-if="filteredRecords.length === 0">
+            <div v-if="filteredRecords.length === 0" class="empty-state">
                 <i class="fal fa-search"></i>
                 <p>查無符合條件的申請記錄</p>
             </div>
         </div>
 
         <!-- Pagination -->
-        <div class="pagination-bar" v-if="totalPages > 1">
+        <div v-if="totalPages > 1" class="pagination-bar">
             <button class="pag-btn" :disabled="currentPage === 1" @click="currentPage--">
                 <i class="fal fa-chevron-left"></i>
             </button>
@@ -191,9 +189,30 @@ export default {
             const all = MOCK_ADMIN_RECORDS;
             return [
                 { key: '', label: '全部記錄', count: all.length, icon: 'fal fa-clipboard-list', color: '#6e5faf', bg: '#f0eeff' },
-                { key: 'pending', label: '待審核', count: all.filter((r) => r.status === 'pending').length, icon: 'fal fa-hourglass-half', color: '#f4a42c', bg: '#fff8ee' },
-                { key: 'approved', label: '已核准', count: all.filter((r) => r.status === 'approved').length, icon: 'fal fa-check-circle', color: '#00a76f', bg: '#edfbf5' },
-                { key: 'rejected', label: '已退回', count: all.filter((r) => r.status === 'rejected').length, icon: 'fal fa-times-circle', color: '#e05c5c', bg: '#fff0f0' },
+                {
+                    key: 'pending',
+                    label: '待審核',
+                    count: all.filter((r) => r.status === 'pending').length,
+                    icon: 'fal fa-hourglass-half',
+                    color: '#f4a42c',
+                    bg: '#fff8ee',
+                },
+                {
+                    key: 'approved',
+                    label: '已核准',
+                    count: all.filter((r) => r.status === 'approved').length,
+                    icon: 'fal fa-check-circle',
+                    color: '#00a76f',
+                    bg: '#edfbf5',
+                },
+                {
+                    key: 'rejected',
+                    label: '已退回',
+                    count: all.filter((r) => r.status === 'rejected').length,
+                    icon: 'fal fa-times-circle',
+                    color: '#e05c5c',
+                    bg: '#fff0f0',
+                },
             ];
         },
         uniqueDepts() {
@@ -229,6 +248,24 @@ export default {
             return { pending: '待審核', approved: '已核准', rejected: '已退回' };
         },
     },
+    watch: {
+        filterStatus() {
+            this.currentPage = 1;
+            this.expandedId = null;
+        },
+        filterCategory() {
+            this.currentPage = 1;
+            this.expandedId = null;
+        },
+        filterDept() {
+            this.currentPage = 1;
+            this.expandedId = null;
+        },
+        searchText() {
+            this.currentPage = 1;
+            this.expandedId = null;
+        },
+    },
     methods: {
         toggleStatusFilter(key) {
             this.filterStatus = this.filterStatus === key ? '' : key;
@@ -244,12 +281,6 @@ export default {
         toggleExpand(id) {
             this.expandedId = this.expandedId === id ? null : id;
         },
-    },
-    watch: {
-        filterStatus() { this.currentPage = 1; this.expandedId = null; },
-        filterCategory() { this.currentPage = 1; this.expandedId = null; },
-        filterDept() { this.currentPage = 1; this.expandedId = null; },
-        searchText() { this.currentPage = 1; this.expandedId = null; },
     },
 };
 </script>
@@ -283,8 +314,13 @@ $accent: #6e5faf;
     transition: all 0.15s;
     border: 2px solid transparent;
 
-    &:hover { border-color: #e0ddf0; }
-    &.active { border-color: $accent; background: #faf9fd; }
+    &:hover {
+        border-color: #e0ddf0;
+    }
+    &.active {
+        border-color: $accent;
+        background: #faf9fd;
+    }
 
     .summary-icon {
         width: 40px;
@@ -295,7 +331,9 @@ $accent: #6e5faf;
         justify-content: center;
         flex-shrink: 0;
 
-        i { font-size: 16px; }
+        i {
+            font-size: 16px;
+        }
     }
 
     .summary-num {
@@ -348,11 +386,18 @@ $accent: #6e5faf;
         background: #fff;
         transition: border-color 0.15s;
 
-        &:focus { border-color: $accent; }
+        &:focus {
+            border-color: $accent;
+        }
     }
 
-    select { min-width: 130px; }
-    &.search-item { flex: 1; min-width: 200px; }
+    select {
+        min-width: 130px;
+    }
+    &.search-item {
+        flex: 1;
+        min-width: 200px;
+    }
 }
 
 .search-wrapper {
@@ -388,7 +433,10 @@ $accent: #6e5faf;
     align-self: flex-end;
     transition: all 0.15s;
 
-    &:hover { border-color: #e05c5c; color: #e05c5c; }
+    &:hover {
+        border-color: #e05c5c;
+        color: #e05c5c;
+    }
 }
 
 // ── Result Info ───────────────────────────────────
@@ -396,8 +444,13 @@ $accent: #6e5faf;
     font-size: 13px;
     color: #888;
 
-    strong { color: $accent; }
-    .filter-hint { color: #c9c2e8; margin-left: 4px; }
+    strong {
+        color: $accent;
+    }
+    .filter-hint {
+        color: #c9c2e8;
+        margin-left: 4px;
+    }
 }
 
 // ── Table ─────────────────────────────────────────
@@ -436,9 +489,15 @@ $accent: #6e5faf;
             border-bottom: 1px solid #f5f3fb;
         }
 
-        &:hover { background: #faf9fd; }
-        &.expanded { background: #f5f3fb; }
-        &.status-pending td { border-left: none; }
+        &:hover {
+            background: #faf9fd;
+        }
+        &.expanded {
+            background: #f5f3fb;
+        }
+        &.status-pending td {
+            border-left: none;
+        }
     }
 
     .detail-row td {
@@ -448,12 +507,33 @@ $accent: #6e5faf;
     }
 }
 
-.col-expand { width: 32px; padding: 0 8px !important; }
-.col-serial { font-family: 'Courier New', monospace; font-size: 11px; color: #aaa; }
-.mono { font-family: 'Courier New', monospace; font-size: 11px; color: #aaa; }
-.dept-cell { font-size: 12px; color: #888; }
-.date-cell { font-size: 12px; color: #888; white-space: nowrap; }
-.step-cell { font-size: 12px; color: #666; }
+.col-expand {
+    width: 32px;
+    padding: 0 8px !important;
+}
+.col-serial {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #aaa;
+}
+.mono {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #aaa;
+}
+.dept-cell {
+    font-size: 12px;
+    color: #888;
+}
+.date-cell {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+}
+.step-cell {
+    font-size: 12px;
+    color: #666;
+}
 
 .person-cell {
     display: flex;
@@ -483,9 +563,18 @@ $accent: #6e5faf;
     border-radius: 20px;
     white-space: nowrap;
 
-    &.chip--pending { background: #fff8ee; color: #f4a42c; }
-    &.chip--approved { background: #edfbf5; color: #00a76f; }
-    &.chip--rejected { background: #fff0f0; color: #e05c5c; }
+    &.chip--pending {
+        background: #fff8ee;
+        color: #f4a42c;
+    }
+    &.chip--approved {
+        background: #edfbf5;
+        color: #00a76f;
+    }
+    &.chip--rejected {
+        background: #fff0f0;
+        color: #e05c5c;
+    }
 }
 
 // ── Detail Content ────────────────────────────────
@@ -499,8 +588,13 @@ $accent: #6e5faf;
 .detail-section {
     padding: 0 16px;
 
-    &:first-child { padding-left: 0; border-right: 1px solid #e0ddf0; }
-    &:last-child { padding-right: 0; }
+    &:first-child {
+        padding-left: 0;
+        border-right: 1px solid #e0ddf0;
+    }
+    &:last-child {
+        padding-right: 0;
+    }
 
     .detail-section-title {
         font-size: 12px;
@@ -556,7 +650,9 @@ $accent: #6e5faf;
     position: relative;
     padding-bottom: 16px;
 
-    &:last-child { padding-bottom: 0; }
+    &:last-child {
+        padding-bottom: 0;
+    }
 
     .step-connector {
         position: absolute;
@@ -567,7 +663,9 @@ $accent: #6e5faf;
         background: #e0ddf0;
     }
 
-    &:last-child .step-connector { display: none; }
+    &:last-child .step-connector {
+        display: none;
+    }
 
     .step-dot {
         width: 12px;
@@ -581,8 +679,13 @@ $accent: #6e5faf;
     }
 
     &.step--done {
-        .step-dot { background: #00a76f; border-color: #00a76f; }
-        .step-connector { background: #00a76f; }
+        .step-dot {
+            background: #00a76f;
+            border-color: #00a76f;
+        }
+        .step-connector {
+            background: #00a76f;
+        }
     }
 
     &.step--current .step-dot {
@@ -591,7 +694,10 @@ $accent: #6e5faf;
         box-shadow: 0 0 0 3px rgba(110, 95, 175, 0.2);
     }
 
-    &.step--rejected .step-dot { background: #e05c5c; border-color: #e05c5c; }
+    &.step--rejected .step-dot {
+        background: #e05c5c;
+        border-color: #e05c5c;
+    }
 
     .step-body {
         flex: 1;
@@ -601,8 +707,15 @@ $accent: #6e5faf;
             align-items: center;
             gap: 8px;
 
-            .step-name { font-size: 13px; font-weight: 600; color: #333; }
-            .step-actor { font-size: 12px; color: #888; }
+            .step-name {
+                font-size: 13px;
+                font-weight: 600;
+                color: #333;
+            }
+            .step-actor {
+                font-size: 12px;
+                color: #888;
+            }
         }
 
         .step-meta {
@@ -610,7 +723,9 @@ $accent: #6e5faf;
             color: #aaa;
             margin-top: 2px;
 
-            .step-remark { color: #888; }
+            .step-remark {
+                color: #888;
+            }
         }
     }
 }
@@ -623,8 +738,13 @@ $accent: #6e5faf;
     padding: 60px;
     color: #ccc;
 
-    i { font-size: 40px; margin-bottom: 10px; }
-    p { font-size: 14px; }
+    i {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+    p {
+        font-size: 14px;
+    }
 }
 
 // ── Pagination ────────────────────────────────────
@@ -647,8 +767,14 @@ $accent: #6e5faf;
         justify-content: center;
         transition: all 0.15s;
 
-        &:hover:not(:disabled) { border-color: $accent; color: $accent; }
-        &:disabled { opacity: 0.4; cursor: not-allowed; }
+        &:hover:not(:disabled) {
+            border-color: $accent;
+            color: $accent;
+        }
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
     }
 
     .pag-info {

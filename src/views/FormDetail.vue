@@ -1,5 +1,5 @@
 <template>
-    <div class="form-detail" v-if="form">
+    <div v-if="form" class="form-detail">
         <!-- 返回 + 標題 -->
         <div class="fd-header">
             <button class="back-btn" @click="$router.push({ name: 'FormCatalog' })">
@@ -18,7 +18,7 @@
                     <div class="fd-card-title"><i class="fal fa-edit"></i> 填寫申請內容</div>
 
                     <div v-if="!submitted">
-                        <div class="form-field" v-for="field in fields" :key="field.name">
+                        <div v-for="field in fields" :key="field.name" class="form-field">
                             <label class="field-label">
                                 {{ field.label }}
                                 <span class="required">*</span>
@@ -29,31 +29,45 @@
                                 <option v-for="opt in field.options" :key="opt" :value="opt">{{ opt }}</option>
                             </select>
 
-                            <input v-else-if="field.type === 'number'" type="number" v-model="formData[field.name]" class="field-input" :placeholder="field.placeholder" />
+                            <input
+                                v-else-if="field.type === 'number'"
+                                v-model="formData[field.name]"
+                                type="number"
+                                class="field-input"
+                                :placeholder="field.placeholder"
+                            />
 
-                            <input v-else-if="field.type === 'date'" type="date" v-model="formData[field.name]" class="field-input" />
+                            <input v-else-if="field.type === 'date'" v-model="formData[field.name]" type="date" class="field-input" />
 
-                            <textarea v-else-if="field.type === 'textarea'" v-model="formData[field.name]" class="field-input textarea" rows="3" :placeholder="field.placeholder"></textarea>
+                            <textarea
+                                v-else-if="field.type === 'textarea'"
+                                v-model="formData[field.name]"
+                                class="field-input textarea"
+                                rows="3"
+                                :placeholder="field.placeholder"
+                            ></textarea>
 
-                            <input v-else type="text" v-model="formData[field.name]" class="field-input" :placeholder="field.placeholder" />
+                            <input v-else v-model="formData[field.name]" type="text" class="field-input" :placeholder="field.placeholder" />
 
-                            <div class="field-help" v-if="field.help">{{ field.help }}</div>
+                            <div v-if="field.help" class="field-help">{{ field.help }}</div>
                         </div>
 
                         <div class="submit-area">
                             <button class="cancel-btn" @click="$router.go(-1)">取消</button>
-                            <button class="submit-btn" @click="submitForm" :disabled="!isValid">
+                            <button class="submit-btn" :disabled="!isValid" @click="submitForm">
                                 <i class="fal fa-paper-plane"></i> 送出申請
                             </button>
                         </div>
                     </div>
 
                     <!-- 送出成功 -->
-                    <div class="success-state" v-else>
+                    <div v-else class="success-state">
                         <div class="success-icon"><i class="fal fa-check-circle"></i></div>
                         <div class="success-title">申請已送出！</div>
                         <div class="success-sub">系統已自動通知審核人員，您可在「我的申請」中追蹤狀態</div>
-                        <div class="success-serial">申請編號：<strong>{{ newSerialNo }}</strong></div>
+                        <div class="success-serial">
+                            申請編號：<strong>{{ newSerialNo }}</strong>
+                        </div>
                         <div class="success-actions">
                             <button class="cancel-btn" @click="$router.push({ name: 'MyRequests' })">查看我的申請</button>
                             <button class="submit-btn" @click="$router.push({ name: 'FormCatalog' })">返回表單目錄</button>
@@ -67,12 +81,12 @@
                 <div class="fd-card">
                     <div class="fd-card-title"><i class="fal fa-route"></i> 審核流程</div>
                     <div class="flow-steps">
-                        <div class="flow-step" v-for="(step, i) in approvalFlow" :key="i">
+                        <div v-for="(step, i) in approvalFlow" :key="i" class="flow-step">
                             <div class="flow-step-num">{{ i + 1 }}</div>
                             <div class="flow-step-body">
                                 <div class="flow-step-name">{{ step.name }}</div>
                                 <div class="flow-step-actor">{{ step.actor }}</div>
-                                <div class="flow-step-cond" v-if="step.condition">條件：{{ step.condition }}</div>
+                                <div v-if="step.condition" class="flow-step-cond">條件：{{ step.condition }}</div>
                             </div>
                         </div>
                     </div>
@@ -82,9 +96,15 @@
                     <div class="fd-card-title"><i class="fal fa-info-circle"></i> 說明</div>
                     <div class="fd-desc">{{ form.proSynopsis }}</div>
                     <div class="fd-meta">
-                        <div class="meta-row"><span class="meta-key">負責人員</span><span class="meta-val">{{ form.accessMemInfo?.[0]?.memName }}</span></div>
-                        <div class="meta-row"><span class="meta-key">所屬部門</span><span class="meta-val">{{ form.accessMemInfo?.[0]?.depName }}</span></div>
-                        <div class="meta-row"><span class="meta-key">目前版本</span><span class="meta-val">{{ form.versionIndex }}</span></div>
+                        <div class="meta-row">
+                            <span class="meta-key">負責人員</span><span class="meta-val">{{ form.accessMemInfo?.[0]?.memName }}</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="meta-key">所屬部門</span><span class="meta-val">{{ form.accessMemInfo?.[0]?.depName }}</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="meta-key">目前版本</span><span class="meta-val">{{ form.versionIndex }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,14 +182,29 @@ export default {
         };
     },
     computed: {
-        proId() { return this.$route.params.id; },
-        form() { return MOCK_CARDS.find(c => c.proID === this.proId) || null; },
-        category() { return this.form ? MOCK_CATEGORIES[this.form.prjID] : ''; },
-        fields() { return FORM_FIELDS[this.proId] || FORM_FIELDS['PRO001']; },
-        approvalFlow() { return APPROVAL_FLOWS[this.proId] || APPROVAL_FLOWS['PRO001']; },
-        isValid() {
-            return this.fields.every(f => this.formData[f.name] && String(this.formData[f.name]).trim() !== '');
+        proId() {
+            return this.$route.params.id;
         },
+        form() {
+            return MOCK_CARDS.find((c) => c.proID === this.proId) || null;
+        },
+        category() {
+            return this.form ? MOCK_CATEGORIES[this.form.prjID] : '';
+        },
+        fields() {
+            return FORM_FIELDS[this.proId] || FORM_FIELDS['PRO001'];
+        },
+        approvalFlow() {
+            return APPROVAL_FLOWS[this.proId] || APPROVAL_FLOWS['PRO001'];
+        },
+        isValid() {
+            return this.fields.every((f) => this.formData[f.name] && String(this.formData[f.name]).trim() !== '');
+        },
+    },
+    created() {
+        this.fields.forEach((f) => {
+            this.formData[f.name] = '';
+        });
     },
     methods: {
         submitForm() {
@@ -179,35 +214,92 @@ export default {
             this.submitted = true;
         },
     },
-    created() {
-        this.fields.forEach(f => { this.formData[f.name] = ''; });
-    },
 };
 </script>
 
 <style lang="scss" scoped>
 $accent: #6e5faf;
 
-.form-detail { }
+.form-detail {
+}
 
 .fd-header {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-    .back-btn { width: 36px; height: 36px; border-radius: 10px; border: 1.5px solid #eaecf0; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #666; font-size: 15px; flex-shrink: 0; &:hover { border-color: $accent; color: $accent; } }
-    .fd-title { font-size: 20px; font-weight: 700; color: #333; margin-bottom: 4px; }
-    .fd-path { font-size: 13px; color: #aaa; }
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    .back-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1.5px solid #eaecf0;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #666;
+        font-size: 15px;
+        flex-shrink: 0;
+        &:hover {
+            border-color: $accent;
+            color: $accent;
+        }
+    }
+    .fd-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 4px;
+    }
+    .fd-path {
+        font-size: 13px;
+        color: #aaa;
+    }
 }
 
-.fd-layout { display: grid; grid-template-columns: 1fr 320px; gap: 16px; align-items: start; }
+.fd-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 16px;
+    align-items: start;
+}
 
-.fd-main {}
+.fd-main {
+}
 
 .fd-card {
-    background: #fff; border-radius: 14px; border: 1px solid #eaecf0; padding: 24px; margin-bottom: 16px;
-    .fd-card-title { font-size: 15px; font-weight: 700; color: #333; margin-bottom: 20px; i { color: $accent; margin-right: 8px; } }
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #eaecf0;
+    padding: 24px;
+    margin-bottom: 16px;
+    .fd-card-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+        i {
+            color: $accent;
+            margin-right: 8px;
+        }
+    }
 }
 
-.form-field { margin-bottom: 20px; }
-.field-label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 6px; .required { color: #e44d55; margin-left: 3px; } }
+.form-field {
+    margin-bottom: 20px;
+}
+.field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    .required {
+        color: #e44d55;
+        margin-left: 3px;
+    }
+}
 .field-input {
     width: 100%;
     border: 1.5px solid #eaecf0;
@@ -219,37 +311,179 @@ $accent: #6e5faf;
     box-sizing: border-box;
     transition: border-color 0.15s;
     background: #fff;
-    &:focus { border-color: $accent; box-shadow: 0 0 0 3px rgba(110,95,175,0.1); }
-    &.textarea { resize: vertical; }
+    &:focus {
+        border-color: $accent;
+        box-shadow: 0 0 0 3px rgba(110, 95, 175, 0.1);
+    }
+    &.textarea {
+        resize: vertical;
+    }
 }
-select.field-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; cursor: pointer; }
-.field-help { font-size: 12px; color: #aaa; margin-top: 4px; }
+select.field-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+.field-help {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 4px;
+}
 
-.submit-area { display: flex; gap: 10px; justify-content: flex-end; margin-top: 28px; padding-top: 20px; border-top: 1px solid #eaecf0; }
-.cancel-btn { padding: 10px 24px; border-radius: 10px; border: 1.5px solid #eaecf0; background: #fff; font-size: 14px; color: #666; cursor: pointer; font-weight: 500; &:hover { background: #f5f5f5; } }
-.submit-btn { padding: 10px 24px; border-radius: 10px; border: none; background: $accent; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; &:hover:not(:disabled) { opacity: 0.88; } &:disabled { opacity: 0.45; cursor: not-allowed; } }
+.submit-area {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #eaecf0;
+}
+.cancel-btn {
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: 1.5px solid #eaecf0;
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    font-weight: 500;
+    &:hover {
+        background: #f5f5f5;
+    }
+}
+.submit-btn {
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: none;
+    background: $accent;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    &:hover:not(:disabled) {
+        opacity: 0.88;
+    }
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+}
 
-.success-state { text-align: center; padding: 32px 0; }
-.success-icon { font-size: 60px; color: #00a76f; margin-bottom: 16px; }
-.success-title { font-size: 22px; font-weight: 700; color: #333; margin-bottom: 8px; }
-.success-sub { font-size: 14px; color: #666; margin-bottom: 16px; }
-.success-serial { font-size: 14px; color: #aaa; margin-bottom: 24px; strong { color: $accent; font-family: monospace; } }
-.success-actions { display: flex; gap: 10px; justify-content: center; }
+.success-state {
+    text-align: center;
+    padding: 32px 0;
+}
+.success-icon {
+    font-size: 60px;
+    color: #00a76f;
+    margin-bottom: 16px;
+}
+.success-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+.success-sub {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+.success-serial {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 24px;
+    strong {
+        color: $accent;
+        font-family: monospace;
+    }
+}
+.success-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
 
 // ── Side ─────────────────────────────────────────
-.flow-steps { display: flex; flex-direction: column; gap: 0; }
+.flow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
 .flow-step {
-    display: flex; gap: 12px; padding-bottom: 16px; position: relative;
-    &:not(:last-child)::after { content: ''; position: absolute; left: 14px; top: 30px; bottom: 0; width: 2px; background: #f0eeff; }
-    .flow-step-num { width: 28px; height: 28px; border-radius: 50%; background: $accent; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1; }
-    .flow-step-name { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 3px; }
-    .flow-step-actor { font-size: 12px; color: #666; }
-    .flow-step-cond { font-size: 11px; color: $accent; margin-top: 3px; font-style: italic; }
+    display: flex;
+    gap: 12px;
+    padding-bottom: 16px;
+    position: relative;
+    &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        left: 14px;
+        top: 30px;
+        bottom: 0;
+        width: 2px;
+        background: #f0eeff;
+    }
+    .flow-step-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: $accent;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        z-index: 1;
+    }
+    .flow-step-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 3px;
+    }
+    .flow-step-actor {
+        font-size: 12px;
+        color: #666;
+    }
+    .flow-step-cond {
+        font-size: 11px;
+        color: $accent;
+        margin-top: 3px;
+        font-style: italic;
+    }
 }
 
-.fd-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 16px; }
-.fd-meta { display: flex; flex-direction: column; gap: 8px; }
-.meta-row { display: flex; gap: 10px; font-size: 13px; }
-.meta-key { color: #aaa; min-width: 70px; }
-.meta-val { color: #333; font-weight: 500; }
+.fd-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+.fd-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.meta-row {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+}
+.meta-key {
+    color: #aaa;
+    min-width: 70px;
+}
+.meta-val {
+    color: #333;
+    font-weight: 500;
+}
 </style>

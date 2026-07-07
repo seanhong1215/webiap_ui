@@ -4,7 +4,7 @@
         <aside class="sidebar" :class="{ collapsed: sidebarCollapsed }">
             <div class="sidebar-brand" @click="$router.push({ name: 'Dashboard' })">
                 <div class="brand-icon"><i class="fal fa-network-wired"></i></div>
-                <div class="brand-text" v-show="!sidebarCollapsed">
+                <div v-show="!sidebarCollapsed" class="brand-text">
                     <div class="brand-name">FlowRing</div>
                     <div class="brand-sub">企業智慧簽核平台</div>
                 </div>
@@ -12,60 +12,60 @@
 
             <nav class="sidebar-nav">
                 <!-- 使用者功能 -->
-                <div class="nav-section-label" v-show="!sidebarCollapsed">使用者</div>
+                <div v-show="!sidebarCollapsed" class="nav-section-label">使用者</div>
 
                 <router-link :to="{ name: 'Dashboard' }" class="nav-item" active-class="active">
                     <i class="fal fa-chart-line nav-icon"></i>
-                    <span class="nav-label" v-show="!sidebarCollapsed">控制台</span>
+                    <span v-show="!sidebarCollapsed" class="nav-label">控制台</span>
                 </router-link>
 
                 <router-link :to="{ name: 'FormCatalog' }" class="nav-item" active-class="active">
                     <i class="fal fa-file-edit nav-icon"></i>
-                    <span class="nav-label" v-show="!sidebarCollapsed">申請表單</span>
+                    <span v-show="!sidebarCollapsed" class="nav-label">申請表單</span>
                 </router-link>
 
                 <router-link :to="{ name: 'ApprovalCenter' }" class="nav-item" active-class="active">
                     <i class="fal fa-stamp nav-icon"></i>
-                    <span class="nav-label" v-show="!sidebarCollapsed">審核中心</span>
-                    <span class="nav-badge" v-if="pendingCount > 0">{{ pendingCount }}</span>
+                    <span v-show="!sidebarCollapsed" class="nav-label">審核中心</span>
+                    <span v-if="pendingCount > 0" class="nav-badge">{{ pendingCount }}</span>
                 </router-link>
 
                 <router-link :to="{ name: 'MyRequests' }" class="nav-item" active-class="active">
                     <i class="fal fa-inbox nav-icon"></i>
-                    <span class="nav-label" v-show="!sidebarCollapsed">我的申請</span>
+                    <span v-show="!sidebarCollapsed" class="nav-label">我的申請</span>
                 </router-link>
 
                 <!-- 管理員功能 -->
                 <template v-if="isAdmin">
-                    <div class="nav-section-label" v-show="!sidebarCollapsed" style="margin-top: 16px">管理後台</div>
-                    <div class="nav-divider" v-show="sidebarCollapsed"></div>
+                    <div v-show="!sidebarCollapsed" class="nav-section-label" style="margin-top: 16px">管理後台</div>
+                    <div v-show="sidebarCollapsed" class="nav-divider"></div>
 
                     <router-link :to="{ name: 'AdminOverview' }" class="nav-item" active-class="active">
                         <i class="fal fa-th-large nav-icon"></i>
-                        <span class="nav-label" v-show="!sidebarCollapsed">系統總覽</span>
+                        <span v-show="!sidebarCollapsed" class="nav-label">系統總覽</span>
                     </router-link>
 
                     <router-link :to="{ name: 'AdminProcesses' }" class="nav-item" active-class="active">
                         <i class="fal fa-sitemap nav-icon"></i>
-                        <span class="nav-label" v-show="!sidebarCollapsed">流程總覽</span>
+                        <span v-show="!sidebarCollapsed" class="nav-label">流程總覽</span>
                     </router-link>
 
                     <router-link :to="{ name: 'AdminRecords' }" class="nav-item" active-class="active">
                         <i class="fal fa-clipboard-list nav-icon"></i>
-                        <span class="nav-label" v-show="!sidebarCollapsed">申請記錄</span>
+                        <span v-show="!sidebarCollapsed" class="nav-label">申請記錄</span>
                     </router-link>
                 </template>
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-info" v-show="!sidebarCollapsed">
+                <div v-show="!sidebarCollapsed" class="user-info">
                     <div class="user-avatar">{{ userAvatar }}</div>
                     <div class="user-detail">
                         <div class="user-name">{{ userName }}</div>
                         <div class="user-dept">{{ userDept }}</div>
                     </div>
                 </div>
-                <div class="user-avatar-sm" v-show="sidebarCollapsed">{{ userAvatar }}</div>
+                <div v-show="sidebarCollapsed" class="user-avatar-sm">{{ userAvatar }}</div>
                 <button class="collapse-btn" @click="sidebarCollapsed = !sidebarCollapsed">
                     <i :class="sidebarCollapsed ? 'fal fa-chevron-right' : 'fal fa-chevron-left'"></i>
                 </button>
@@ -82,7 +82,7 @@
                         <span>{{ userName }}</span>
                         <span v-if="isAdmin" class="role-badge">管理員</span>
                     </div>
-                    <button class="logout-btn" @click="logout" title="登出">
+                    <button class="logout-btn" title="登出" @click="logout">
                         <i class="fal fa-sign-out"></i>
                     </button>
                 </div>
@@ -164,7 +164,9 @@ $bg: #f4f5f9;
     border-right: 1px solid #eaecf0;
     display: flex;
     flex-direction: column;
-    transition: width 0.25s, min-width 0.25s;
+    transition:
+        width 0.25s,
+        min-width 0.25s;
     overflow: hidden;
 
     &.collapsed {

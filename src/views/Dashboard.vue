@@ -4,28 +4,28 @@
         <div class="welcome-banner">
             <div class="welcome-text">
                 <div class="greeting">早安，王小明 👋</div>
-                <div class="sub">今天有 <strong>{{ stats.pendingMyAction }}</strong> 份文件等待您審核</div>
+                <div class="sub">
+                    今天有 <strong>{{ stats.pendingMyAction }}</strong> 份文件等待您審核
+                </div>
             </div>
             <div class="quick-actions">
-                <button class="qbtn primary" @click="$router.push({ name: 'FormCatalog' })">
-                    <i class="fal fa-plus"></i> 新增申請
-                </button>
+                <button class="qbtn primary" @click="$router.push({ name: 'FormCatalog' })"><i class="fal fa-plus"></i> 新增申請</button>
                 <button class="qbtn outline" @click="$router.push({ name: 'ApprovalCenter' })">
                     <i class="fal fa-clipboard-check"></i> 審核中心
-                    <span class="badge" v-if="stats.pendingMyAction">{{ stats.pendingMyAction }}</span>
+                    <span v-if="stats.pendingMyAction" class="badge">{{ stats.pendingMyAction }}</span>
                 </button>
             </div>
         </div>
 
         <!-- 數字卡片 -->
         <div class="stat-row">
-            <div class="stat-card" v-for="s in statCards" :key="s.label" @click="s.route && $router.push({ name: s.route })">
+            <div v-for="s in statCards" :key="s.label" class="stat-card" @click="s.route && $router.push({ name: s.route })">
                 <div class="stat-icon" :style="{ background: s.bg }"><i :class="s.icon"></i></div>
                 <div class="stat-body">
                     <div class="stat-value">{{ s.value }}</div>
                     <div class="stat-label">{{ s.label }}</div>
                 </div>
-                <div class="stat-arrow" v-if="s.route"><i class="fal fa-chevron-right"></i></div>
+                <div v-if="s.route" class="stat-arrow"><i class="fal fa-chevron-right"></i></div>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                     <span class="panel-title"><i class="fal fa-history"></i> 最近活動</span>
                 </div>
                 <div class="activity-list">
-                    <div class="activity-item" v-for="(act, i) in stats.recentActivity" :key="i">
+                    <div v-for="(act, i) in stats.recentActivity" :key="i" class="activity-item">
                         <div class="act-dot" :class="act.type"></div>
                         <div class="act-body">
                             <div class="act-text">{{ act.text }}</div>
@@ -56,7 +56,7 @@
                         <span class="panel-link" @click="$router.push({ name: 'MyRequests' })">查看全部</span>
                     </div>
                     <div class="my-status">
-                        <div class="ms-item" v-for="ms in myStatusItems" :key="ms.label">
+                        <div v-for="ms in myStatusItems" :key="ms.label" class="ms-item">
                             <div class="ms-bar-wrap">
                                 <div class="ms-bar" :style="{ width: ms.pct + '%', background: ms.color }"></div>
                             </div>
@@ -73,7 +73,7 @@
                         <span class="panel-link" @click="$router.push({ name: 'FormCatalog' })">全部表單</span>
                     </div>
                     <div class="quick-forms">
-                        <div class="qf-item" v-for="f in quickForms" :key="f.id" @click="goToForm(f)">
+                        <div v-for="f in quickForms" :key="f.id" class="qf-item" @click="goToForm(f)">
                             <div class="qf-icon" :style="{ background: f.color + '18', color: f.color }">
                                 <i :class="f.icon"></i>
                             </div>
@@ -109,10 +109,38 @@ export default {
     computed: {
         statCards() {
             return [
-                { label: '待我審核', value: this.stats.pendingMyAction, icon: 'fal fa-inbox', bg: '#fff0f0', color: '#e44d55', route: 'ApprovalCenter' },
-                { label: '我的申請（處理中）', value: this.stats.mySubmissions.pending, icon: 'fal fa-clock', bg: '#fff8ec', color: '#f4a42c', route: 'MyRequests' },
-                { label: '本月已核准', value: this.stats.thisMonthApproved, icon: 'fal fa-check-circle', bg: '#f0faf5', color: '#00a76f', route: null },
-                { label: '平均審核時數', value: this.stats.avgApprovalHours + 'h', icon: 'fal fa-tachometer-fast', bg: '#f0eeff', color: '#6e5faf', route: null },
+                {
+                    label: '待我審核',
+                    value: this.stats.pendingMyAction,
+                    icon: 'fal fa-inbox',
+                    bg: '#fff0f0',
+                    color: '#e44d55',
+                    route: 'ApprovalCenter',
+                },
+                {
+                    label: '我的申請（處理中）',
+                    value: this.stats.mySubmissions.pending,
+                    icon: 'fal fa-clock',
+                    bg: '#fff8ec',
+                    color: '#f4a42c',
+                    route: 'MyRequests',
+                },
+                {
+                    label: '本月已核准',
+                    value: this.stats.thisMonthApproved,
+                    icon: 'fal fa-check-circle',
+                    bg: '#f0faf5',
+                    color: '#00a76f',
+                    route: null,
+                },
+                {
+                    label: '平均審核時數',
+                    value: this.stats.avgApprovalHours + 'h',
+                    icon: 'fal fa-tachometer-fast',
+                    bg: '#f0eeff',
+                    color: '#6e5faf',
+                    route: null,
+                },
             ];
         },
         myStatusItems() {
@@ -127,7 +155,6 @@ export default {
     },
     methods: {
         goToForm(form) {
-            this.$store.dispatch('process/updateSelectedSpecProId', form.id);
             this.$router.push({ name: 'FormDetail', params: { id: form.id } });
         },
     },
@@ -138,7 +165,8 @@ export default {
 $primary: #483e72;
 $accent: #6e5faf;
 
-.dashboard { }
+.dashboard {
+}
 
 // ── Welcome Banner ────────────────────────────────
 .welcome-banner {
@@ -151,10 +179,23 @@ $accent: #6e5faf;
     margin-bottom: 20px;
     color: #fff;
 
-    .greeting { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-    .sub { font-size: 14px; opacity: 0.85; strong { font-weight: 700; } }
+    .greeting {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .sub {
+        font-size: 14px;
+        opacity: 0.85;
+        strong {
+            font-weight: 700;
+        }
+    }
 
-    .quick-actions { display: flex; gap: 10px; }
+    .quick-actions {
+        display: flex;
+        gap: 10px;
+    }
 }
 
 .qbtn {
@@ -182,8 +223,21 @@ $accent: #6e5faf;
         padding: 0 4px;
     }
 
-    &.primary { background: #fff; color: $primary; &:hover { opacity: 0.9; } }
-    &.outline { background: rgba(255,255,255,0.15); color: #fff; border: 1.5px solid rgba(255,255,255,0.5); &:hover { background: rgba(255,255,255,0.25); } }
+    &.primary {
+        background: #fff;
+        color: $primary;
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+    &.outline {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        &:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+    }
 }
 
 // ── Stats Row ─────────────────────────────────────
@@ -205,7 +259,10 @@ $accent: #6e5faf;
     transition: all 0.15s;
     border: 1px solid #eaecf0;
 
-    &:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
 
     .stat-icon {
         width: 48px;
@@ -218,10 +275,24 @@ $accent: #6e5faf;
         flex-shrink: 0;
     }
 
-    .stat-body { flex: 1; }
-    .stat-value { font-size: 28px; font-weight: 700; color: #333; line-height: 1; }
-    .stat-label { font-size: 13px; color: #919191; margin-top: 4px; }
-    .stat-arrow { color: #ccc; font-size: 13px; }
+    .stat-body {
+        flex: 1;
+    }
+    .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        line-height: 1;
+    }
+    .stat-label {
+        font-size: 13px;
+        color: #919191;
+        margin-top: 4px;
+    }
+    .stat-arrow {
+        color: #ccc;
+        font-size: 13px;
+    }
 }
 
 // ── Dashboard Body ────────────────────────────────
@@ -232,7 +303,11 @@ $accent: #6e5faf;
     align-items: start;
 }
 
-.right-col { display: flex; flex-direction: column; gap: 16px; }
+.right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
 // ── Panel ─────────────────────────────────────────
 .panel {
@@ -249,12 +324,29 @@ $accent: #6e5faf;
     padding: 16px 20px;
     border-bottom: 1px solid #f0eeff;
 
-    .panel-title { font-size: 14px; font-weight: 600; color: #333; i { margin-right: 6px; color: $accent; } }
-    .panel-link { font-size: 13px; color: $accent; cursor: pointer; &:hover { text-decoration: underline; } }
+    .panel-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        i {
+            margin-right: 6px;
+            color: $accent;
+        }
+    }
+    .panel-link {
+        font-size: 13px;
+        color: $accent;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 // ── Activity List ─────────────────────────────────
-.activity-list { padding: 8px 0; }
+.activity-list {
+    padding: 8px 0;
+}
 
 .activity-item {
     display: flex;
@@ -262,7 +354,9 @@ $accent: #6e5faf;
     gap: 12px;
     padding: 12px 20px;
     transition: background 0.15s;
-    &:hover { background: #fafafa; }
+    &:hover {
+        background: #fafafa;
+    }
 
     .act-dot {
         width: 8px;
@@ -270,32 +364,75 @@ $accent: #6e5faf;
         border-radius: 50%;
         margin-top: 6px;
         flex-shrink: 0;
-        &.urgent { background: #e44d55; }
-        &.info { background: #6e5faf; }
-        &.success { background: #00a76f; }
-        &.error { background: #f4a42c; }
+        &.urgent {
+            background: #e44d55;
+        }
+        &.info {
+            background: #6e5faf;
+        }
+        &.success {
+            background: #00a76f;
+        }
+        &.error {
+            background: #f4a42c;
+        }
     }
 
-    .act-text { font-size: 14px; color: #333; margin-bottom: 3px; }
-    .act-time { font-size: 12px; color: #aaa; }
+    .act-text {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 3px;
+    }
+    .act-time {
+        font-size: 12px;
+        color: #aaa;
+    }
 }
 
 // ── My Status ─────────────────────────────────────
-.my-status { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+.my-status {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
 .ms-item {
     display: flex;
     align-items: center;
     gap: 10px;
 
-    .ms-bar-wrap { flex: 1; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
-    .ms-bar { height: 100%; border-radius: 3px; transition: width 0.5s; }
-    .ms-label { font-size: 13px; color: #666; width: 60px; flex-shrink: 0; }
-    .ms-value { font-size: 16px; font-weight: 700; width: 24px; text-align: right; flex-shrink: 0; }
+    .ms-bar-wrap {
+        flex: 1;
+        height: 6px;
+        background: #f0f0f0;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    .ms-bar {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.5s;
+    }
+    .ms-label {
+        font-size: 13px;
+        color: #666;
+        width: 60px;
+        flex-shrink: 0;
+    }
+    .ms-value {
+        font-size: 16px;
+        font-weight: 700;
+        width: 24px;
+        text-align: right;
+        flex-shrink: 0;
+    }
 }
 
 // ── Quick Forms ───────────────────────────────────
-.quick-forms { padding: 8px 0; }
+.quick-forms {
+    padding: 8px 0;
+}
 
 .qf-item {
     display: flex;
@@ -304,7 +441,9 @@ $accent: #6e5faf;
     padding: 12px 20px;
     cursor: pointer;
     transition: background 0.15s;
-    &:hover { background: #fafafa; }
+    &:hover {
+        background: #fafafa;
+    }
 
     .qf-icon {
         width: 36px;
@@ -317,9 +456,22 @@ $accent: #6e5faf;
         flex-shrink: 0;
     }
 
-    .qf-body { flex: 1; min-width: 0; }
-    .qf-name { font-size: 14px; font-weight: 500; color: #333; }
-    .qf-cat { font-size: 12px; color: #aaa; }
-    .qf-arrow { color: #ccc; font-size: 13px; }
+    .qf-body {
+        flex: 1;
+        min-width: 0;
+    }
+    .qf-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+    }
+    .qf-cat {
+        font-size: 12px;
+        color: #aaa;
+    }
+    .qf-arrow {
+        color: #ccc;
+        font-size: 13px;
+    }
 }
 </style>

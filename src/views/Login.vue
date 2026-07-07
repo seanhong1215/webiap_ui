@@ -9,13 +9,7 @@
             <div class="login-form">
                 <div class="form-field">
                     <label>帳號</label>
-                    <input
-                        v-model="username"
-                        type="text"
-                        placeholder="user 或 admin"
-                        @keyup.enter="login"
-                        :class="{ error: loginError }"
-                    />
+                    <input v-model="username" type="text" placeholder="user 或 admin" :class="{ error: loginError }" @keyup.enter="login" />
                 </div>
                 <div class="form-field">
                     <label>密碼</label>
@@ -23,14 +17,12 @@
                         v-model="password"
                         type="password"
                         placeholder="請輸入密碼"
-                        @keyup.enter="login"
                         :class="{ error: loginError }"
+                        @keyup.enter="login"
                     />
                 </div>
-                <div class="error-msg" v-if="loginError">
-                    <i class="fal fa-exclamation-circle"></i> 帳號或密碼錯誤，請重新輸入
-                </div>
-                <button class="login-btn" @click="login" :disabled="!username || !password">
+                <div v-if="loginError" class="error-msg"><i class="fal fa-exclamation-circle"></i> 帳號或密碼錯誤，請重新輸入</div>
+                <button class="login-btn" :disabled="!username || !password" @click="login">
                     <i class="fal fa-sign-in"></i>
                     登入系統
                 </button>
@@ -69,9 +61,7 @@ export default {
         ...mapMutations('user', ['setUser']),
         login() {
             if (!this.username || !this.password) return;
-            const matched = MOCK_USERS.find(
-                (u) => u.account === this.username && u.password === this.password
-            );
+            const matched = MOCK_USERS.find((u) => u.account === this.username && u.password === this.password);
             if (!matched) {
                 this.loginError = true;
                 return;
@@ -203,7 +193,9 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: opacity 0.2s, transform 0.1s;
+    transition:
+        opacity 0.2s,
+        transform 0.1s;
     margin-top: 8px;
 
     i {

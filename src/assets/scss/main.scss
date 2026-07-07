@@ -1,4 +1,8 @@
-$purple_primary: #483E72;
+// 全域 SCSS 變數(透過 vue.config.js prependData 注入每個元件)
+// 注意:此檔會被前置到每個 .vue 的 <style scss>,只放「變數」,勿放實際 CSS 規則,
+// 否則規則會被重複輸出到每個元件。
+
+$purple_primary: #483e72;
 $blue_primary: #6e5faf;
 $blue_light: #ede9f7;
 $blue_emphasize: #6e5faf;
@@ -23,91 +27,3 @@ $text_darkmode: #ffffff;
 $text_auxiliary: #77838e;
 
 $status_error: #da1414;
-
-// Ant Design compatibility styles.
-// button.f-btn-large {
-//     padding-top: 0;
-//     padding-bottom: 0;
-// }
-
-// ── FPaginations global styles ──────────────────────
-.f-page-wrap {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 12px 0;
-    font-size: 14px;
-    color: #5c6466;
-
-    .f-page-size {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-
-        .f-page-size-select {
-            border: 1px solid rgba(196, 196, 196, 1);
-            border-radius: 4px;
-            padding: 2px 6px;
-            font-size: 14px;
-            color: #333;
-            cursor: pointer;
-        }
-    }
-
-    .f-page-nav {
-        .f-pagination {
-            display: flex;
-            align-items: center;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: 4px;
-
-            .f-page-item {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                min-width: 28px;
-                height: 28px;
-                padding: 0 6px;
-                border: 1px solid rgba(196, 196, 196, 0.6);
-                border-radius: 4px;
-                cursor: pointer;
-                user-select: none;
-                transition: all 0.15s;
-                color: #5c6466;
-
-                &:hover:not(.disabled) {
-                    border-color: #6e5faf;
-                    color: #6e5faf;
-                }
-
-                &.active {
-                    border-color: #6e5faf;
-                    color: #6e5faf;
-                    font-weight: 600;
-                }
-
-                &.disabled {
-                    opacity: 0.35;
-                    cursor: not-allowed;
-                }
-
-                .f-page-link {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    svg { fill: currentColor; }
-                }
-            }
-        }
-    }
-
-    .f-page-info {
-        color: #919191;
-        font-size: 13px;
-    }
-}
-
-

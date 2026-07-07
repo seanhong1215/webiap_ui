@@ -13,22 +13,14 @@
 
         <!-- 分類篩選 -->
         <div class="category-tabs">
-            <button
-                v-for="cat in categories"
-                :key="cat"
-                :class="['cat-tab', { active: selectedCat === cat }]"
-                @click="selectedCat = cat"
-            >{{ cat }}</button>
+            <button v-for="cat in categories" :key="cat" :class="['cat-tab', { active: selectedCat === cat }]" @click="selectedCat = cat">
+                {{ cat }}
+            </button>
         </div>
 
         <!-- 表單卡片 -->
         <div class="forms-grid">
-            <div
-                v-for="form in filteredForms"
-                :key="form.id"
-                class="form-card"
-                @click="goToForm(form)"
-            >
+            <div v-for="form in filteredForms" :key="form.id" class="form-card" @click="goToForm(form)">
                 <div class="form-card-top">
                     <div class="form-icon" :style="{ background: form.color + '18', color: form.color }">
                         <i :class="form.icon"></i>
@@ -50,7 +42,7 @@
             </div>
         </div>
 
-        <div class="empty-state" v-if="filteredForms.length === 0">
+        <div v-if="filteredForms.length === 0" class="empty-state">
             <i class="fal fa-search empty-icon"></i>
             <div>找不到符合「{{ keyword }}」的表單</div>
         </div>
@@ -78,11 +70,11 @@ export default {
     },
     computed: {
         categories() {
-            const cats = ['全部', ...new Set(MOCK_CARDS.map(c => MOCK_CATEGORIES[c.prjID]))];
+            const cats = ['全部', ...new Set(MOCK_CARDS.map((c) => MOCK_CATEGORIES[c.prjID]))];
             return cats;
         },
         allForms() {
-            return MOCK_CARDS.map(card => {
+            return MOCK_CARDS.map((card) => {
                 const status = global.processTypeConverter(card.startTime, card.endTime);
                 const prjMeta = FORM_ICONS[card.prjID] || { icon: 'fal fa-file-alt', color: '#6e5faf' };
                 return {
@@ -100,7 +92,7 @@ export default {
             });
         },
         filteredForms() {
-            return this.allForms.filter(f => {
+            return this.allForms.filter((f) => {
                 const matchCat = this.selectedCat === '全部' || f.category === this.selectedCat;
                 const matchKw = !this.keyword || f.name.includes(this.keyword) || f.desc.includes(this.keyword);
                 return matchCat && matchKw;
@@ -112,7 +104,6 @@ export default {
             return { 1: '草稿', 2: '即將生效', 3: '可申請', 4: '已停用' }[type] || '-';
         },
         goToForm(form) {
-            this.$store.dispatch('process/updateSelectedSpecProId', form.id);
             this.$router.push({ name: 'FormDetail', params: { id: form.id } });
         },
     },
@@ -122,7 +113,8 @@ export default {
 <style lang="scss" scoped>
 $accent: #6e5faf;
 
-.form-catalog { }
+.form-catalog {
+}
 
 .catalog-header {
     display: flex;
@@ -131,15 +123,29 @@ $accent: #6e5faf;
     margin-bottom: 20px;
     gap: 16px;
 
-    .catalog-title { font-size: 20px; font-weight: 700; color: #333; margin-bottom: 6px; }
-    .catalog-sub { font-size: 14px; color: #919191; }
+    .catalog-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 6px;
+    }
+    .catalog-sub {
+        font-size: 14px;
+        color: #919191;
+    }
 }
 
 .catalog-search {
     position: relative;
     flex-shrink: 0;
 
-    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #aaa; }
+    .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
     .search-input {
         border: 1.5px solid #eaecf0;
         border-radius: 10px;
@@ -147,7 +153,9 @@ $accent: #6e5faf;
         font-size: 14px;
         width: 240px;
         outline: none;
-        &:focus { border-color: $accent; }
+        &:focus {
+            border-color: $accent;
+        }
     }
 }
 
@@ -168,8 +176,16 @@ $accent: #6e5faf;
     cursor: pointer;
     transition: all 0.15s;
 
-    &:hover { border-color: $accent; color: $accent; }
-    &.active { background: $accent; border-color: $accent; color: #fff; font-weight: 600; }
+    &:hover {
+        border-color: $accent;
+        color: $accent;
+    }
+    &.active {
+        background: $accent;
+        border-color: $accent;
+        color: #fff;
+        font-weight: 600;
+    }
 }
 
 .forms-grid {
@@ -217,16 +233,45 @@ $accent: #6e5faf;
     font-weight: 600;
     padding: 3px 10px;
     border-radius: 12px;
-    &.status-1 { background: #f5f5f5; color: #aaa; }
-    &.status-2 { background: #fff8ec; color: #f4a42c; }
-    &.status-3 { background: #f0faf5; color: #00a76f; }
-    &.status-4 { background: #fff0f0; color: #e44d55; }
+    &.status-1 {
+        background: #f5f5f5;
+        color: #aaa;
+    }
+    &.status-2 {
+        background: #fff8ec;
+        color: #f4a42c;
+    }
+    &.status-3 {
+        background: #f0faf5;
+        color: #00a76f;
+    }
+    &.status-4 {
+        background: #fff0f0;
+        color: #e44d55;
+    }
 }
 
 .form-card-body {
-    .form-name { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 4px; }
-    .form-cat { font-size: 12px; color: #aaa; margin-bottom: 8px; }
-    .form-desc { font-size: 13px; color: #666; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .form-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 4px;
+    }
+    .form-cat {
+        font-size: 12px;
+        color: #aaa;
+        margin-bottom: 8px;
+    }
+    .form-desc {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 }
 
 .form-card-footer {
@@ -241,7 +286,9 @@ $accent: #6e5faf;
         gap: 12px;
         font-size: 12px;
         color: #aaa;
-        i { margin-right: 3px; }
+        i {
+            margin-right: 3px;
+        }
     }
 }
 
@@ -258,7 +305,9 @@ $accent: #6e5faf;
     align-items: center;
     gap: 6px;
     transition: opacity 0.15s;
-    &:hover { opacity: 0.88; }
+    &:hover {
+        opacity: 0.88;
+    }
 }
 
 .empty-state {
@@ -266,6 +315,10 @@ $accent: #6e5faf;
     padding: 60px 0;
     color: #aaa;
     font-size: 14px;
-    .empty-icon { font-size: 40px; display: block; margin-bottom: 12px; }
+    .empty-icon {
+        font-size: 40px;
+        display: block;
+        margin-bottom: 12px;
+    }
 }
 </style>

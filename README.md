@@ -8,9 +8,9 @@
 
 - **角色權限系統**：使用者 / 管理員雙角色登入，路由守衛與功能隔離
 - **大型資料呈現**：申請記錄分頁、多維度篩選、可展開詳情列
-- **互動式管理後台**：流程分類分布圖、條件規則 CRUD、表單欄位管理
-- **元件化架構**：Flowring UI 自製元件庫 + Ant Design Vue 組合使用
-- **Vuex 狀態管理**：跨頁面資料共享與 sessionStorage 持久化
+- **互動式管理後台**：流程分類分布圖、條件規則檢視、表單欄位管理
+- **零 UI 依賴**：全部畫面以手寫 Vue 3 SFC + scoped SCSS 刻成，不依賴任何 UI 元件庫
+- **Vuex 狀態管理**：登入狀態集中管理與 sessionStorage 持久化
 
 > 本版本為**前端展示用途**，使用 Mock Data 模擬後端資料，無需任何後端服務即可完整體驗。
 
@@ -66,11 +66,14 @@ http://localhost:8080
 | 分類 | 技術 |
 |------|------|
 | 框架 | Vue 3 + Vue Router 4 + Vuex 4 |
-| UI | Ant Design Vue 2 + Flowring UI（自製元件庫） |
-| 樣式 | SCSS |
+| UI | 手寫 Vue 3 SFC + scoped SCSS（無 UI 元件庫依賴） |
+| 圖示 | Font Awesome |
 | 建構 | Vue CLI 4 + Webpack |
 | 瀏覽器自動化 | Playwright（截圖測試） |
 | 狀態持久化 | vuex-persistedstate（sessionStorage） |
+
+> 執行期相依套件僅 6 個(`vue` / `vue-router` / `vuex` / `vuex-persistedstate` / `core-js` /
+> `register-service-worker`),vendor bundle 約 46 KB(gzip)。
 
 ---
 
@@ -79,17 +82,14 @@ http://localhost:8080
 ```
 src/
 ├── components/
-│   ├── Basic/          # Flowring UI 元件（FlButton、FlTable、FPaginations 等）
-│   ├── Common/         # 業務共用元件（StatusBadge、OnOffLineDialog 等）
 │   └── Layout/         # AppShell（側邊欄 + 頂部列）
 ├── store/
+│   ├── index.js        # Vuex + sessionStorage 持久化設定
 │   └── modules/
-│       ├── user.js     # 登入使用者狀態（角色、姓名、部門）
-│       ├── process.js  # 流程清單與選取狀態
-│       └── condition.js # 條件設定狀態
+│       └── user.js     # 登入使用者狀態（角色、姓名、部門）
 ├── utils/
 │   ├── mockData.js     # Mock 資料（8 流程、12 筆申請記錄、2 帳號）
-│   └── api.js          # API 抽象層（全部對應 Mock）
+│   └── global.js       # processTypeConverter（依起訖日推導流程狀態）
 └── views/
     ├── Login.vue           # 登入（帳密驗證）
     ├── Dashboard.vue       # 使用者控制台
