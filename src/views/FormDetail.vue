@@ -3,7 +3,7 @@
         <!-- 返回 + 標題 -->
         <div class="fd-header">
             <button class="back-btn" @click="$router.push({ name: 'FormCatalog' })">
-                <i class="fal fa-arrow-left"></i>
+                <i class="ti ti-arrow-left"></i>
             </button>
             <div>
                 <div class="fd-title">{{ form.proName }}</div>
@@ -15,7 +15,7 @@
             <!-- 左：表單填寫 -->
             <div class="fd-main">
                 <div class="fd-card">
-                    <div class="fd-card-title"><i class="fal fa-edit"></i> 填寫申請內容</div>
+                    <div class="fd-card-title"><i class="ti ti-edit"></i> 填寫申請內容</div>
 
                     <div v-if="!submitted">
                         <div v-for="field in fields" :key="field.name" class="form-field">
@@ -54,15 +54,13 @@
 
                         <div class="submit-area">
                             <button class="cancel-btn" @click="$router.go(-1)">取消</button>
-                            <button class="submit-btn" :disabled="!isValid" @click="submitForm">
-                                <i class="fal fa-paper-plane"></i> 送出申請
-                            </button>
+                            <button class="submit-btn" :disabled="!isValid" @click="submitForm"><i class="ti ti-send"></i> 送出申請</button>
                         </div>
                     </div>
 
                     <!-- 送出成功 -->
                     <div v-else class="success-state">
-                        <div class="success-icon"><i class="fal fa-check-circle"></i></div>
+                        <div class="success-icon"><i class="ti ti-circle-check"></i></div>
                         <div class="success-title">申請已送出！</div>
                         <div class="success-sub">系統已自動通知審核人員，您可在「我的申請」中追蹤狀態</div>
                         <div class="success-serial">
@@ -79,7 +77,7 @@
             <!-- 右：審核流程說明 -->
             <div class="fd-side">
                 <div class="fd-card">
-                    <div class="fd-card-title"><i class="fal fa-route"></i> 審核流程</div>
+                    <div class="fd-card-title"><i class="ti ti-route"></i> 審核流程</div>
                     <div class="flow-steps">
                         <div v-for="(step, i) in approvalFlow" :key="i" class="flow-step">
                             <div class="flow-step-num">{{ i + 1 }}</div>
@@ -93,7 +91,7 @@
                 </div>
 
                 <div class="fd-card">
-                    <div class="fd-card-title"><i class="fal fa-info-circle"></i> 說明</div>
+                    <div class="fd-card-title"><i class="ti ti-info-circle"></i> 說明</div>
                     <div class="fd-desc">{{ form.proSynopsis }}</div>
                     <div class="fd-meta">
                         <div class="meta-row">

@@ -2,7 +2,7 @@
     <div class="login-page">
         <div class="login-card">
             <div class="login-logo">
-                <div class="logo-icon"><i class="fal fa-network-wired"></i></div>
+                <div class="logo-icon"><i class="ti ti-network"></i></div>
                 <div class="logo-title">FlowRing</div>
                 <div class="logo-subtitle">企業智慧簽核平台</div>
             </div>
@@ -21,9 +21,9 @@
                         @keyup.enter="login"
                     />
                 </div>
-                <div v-if="loginError" class="error-msg"><i class="fal fa-exclamation-circle"></i> 帳號或密碼錯誤，請重新輸入</div>
+                <div v-if="loginError" class="error-msg"><i class="ti ti-exclamation-circle"></i> 帳號或密碼錯誤，請重新輸入</div>
                 <button class="login-btn" :disabled="!username || !password" @click="login">
-                    <i class="fal fa-sign-in"></i>
+                    <i class="ti ti-login"></i>
                     登入系統
                 </button>
                 <div class="demo-hints">

@@ -8,7 +8,7 @@
             </div>
             <div class="header-right">
                 <div class="search-wrapper">
-                    <i class="fal fa-search search-icon"></i>
+                    <i class="ti ti-search search-icon"></i>
                     <input v-model="searchText" class="search-input" placeholder="搜尋流程名稱..." />
                 </div>
             </div>
@@ -18,10 +18,10 @@
         <div class="info-banner">
             <div class="banner-header" @click="showGuide = !showGuide">
                 <div class="banner-left">
-                    <i class="fal fa-info-circle"></i>
+                    <i class="ti ti-info-circle"></i>
                     <span>關於流程管理</span>
                 </div>
-                <i :class="showGuide ? 'fal fa-chevron-up' : 'fal fa-chevron-down'" class="banner-toggle"></i>
+                <i :class="showGuide ? 'ti ti-chevron-up' : 'ti ti-chevron-down'" class="banner-toggle"></i>
             </div>
             <div v-show="showGuide" class="banner-body">
                 <p>
@@ -29,14 +29,14 @@
                 </p>
                 <div class="banner-items">
                     <div class="banner-item">
-                        <i class="fal fa-code-branch"></i>
+                        <i class="ti ti-git-branch"></i>
                         <div>
                             <strong>條件規則</strong>：根據申請人填寫的表單欄位值，決定走哪條審核路徑。 例如：申請金額超過萬元時 →
                             需財務長審核；一般金額 → 主管審核即可。
                         </div>
                     </div>
                     <div class="banner-item">
-                        <i class="fal fa-file-alt"></i>
+                        <i class="ti ti-file-text"></i>
                         <div>
                             <strong>表單欄位</strong
                             >：申請人在提交申請時需要填寫的資料欄位（如請假類型、天數、原因），決定條件規則能判斷的依據。
@@ -69,9 +69,9 @@
                     <div class="type-badge" :class="`type--${proc.typeCode}`">{{ typeLabel[proc.typeCode] }}</div>
                 </div>
                 <div class="card-meta">
-                    <span class="meta-item"><i class="fal fa-tag"></i>{{ getCategoryName(proc.prjID) }}</span>
-                    <span class="meta-item"><i class="fal fa-code-branch"></i>{{ proc.versionIndex }}</span>
-                    <span class="meta-item"><i class="fal fa-user"></i>{{ getManager(proc) }}</span>
+                    <span class="meta-item"><i class="ti ti-tag"></i>{{ getCategoryName(proc.prjID) }}</span>
+                    <span class="meta-item"><i class="ti ti-git-branch"></i>{{ proc.versionIndex }}</span>
+                    <span class="meta-item"><i class="ti ti-user"></i>{{ getManager(proc) }}</span>
                 </div>
                 <div class="card-stats">
                     <div class="stat-box">
@@ -90,21 +90,21 @@
                     </div>
                 </div>
                 <div v-if="proc.startTime !== '9999-12-31'" class="card-time">
-                    <i class="fal fa-calendar-alt"></i>
+                    <i class="ti ti-calendar-event"></i>
                     <span>{{ formatDate(proc.startTime) }}</span>
                     <span class="time-sep">→</span>
                     <span>{{ proc.endTime === '9999-12-31' ? '不限' : formatDate(proc.endTime) }}</span>
                 </div>
                 <div class="card-actions">
-                    <button class="btn-rules" @click="openRuleModal(proc)"><i class="fal fa-code-branch"></i> 管理條件規則</button>
-                    <button class="btn-form" @click="openFormModal(proc)"><i class="fal fa-file-alt"></i> 管理表單欄位</button>
+                    <button class="btn-rules" @click="openRuleModal(proc)"><i class="ti ti-git-branch"></i> 管理條件規則</button>
+                    <button class="btn-form" @click="openFormModal(proc)"><i class="ti ti-file-text"></i> 管理表單欄位</button>
                 </div>
             </div>
         </div>
 
         <!-- Empty State -->
         <div v-else class="empty-state">
-            <i class="fal fa-inbox"></i>
+            <i class="ti ti-inbox"></i>
             <p>查無符合條件的流程</p>
         </div>
 
@@ -114,20 +114,20 @@
                 <div class="modal-box modal-box--wide">
                     <div class="modal-header">
                         <div class="modal-title">
-                            <i class="fal fa-code-branch"></i>
+                            <i class="ti ti-git-branch"></i>
                             {{ ruleModal.procName }} — 條件規則管理
                         </div>
                         <div class="modal-header-actions">
                             <button v-if="!showAddRuleForm" class="btn-add-rule" @click="showAddRuleForm = true">
-                                <i class="fal fa-plus"></i> 新增規則
+                                <i class="ti ti-plus"></i> 新增規則
                             </button>
-                            <button class="modal-close" @click="closeRuleModal"><i class="fal fa-times"></i></button>
+                            <button class="modal-close" @click="closeRuleModal"><i class="ti ti-x"></i></button>
                         </div>
                     </div>
                     <div class="modal-body">
                         <!-- 說明提示 -->
                         <div class="rule-hint">
-                            <i class="fal fa-lightbulb"></i>
+                            <i class="ti ti-bulb"></i>
                             條件規則決定申請人送出後走哪條審核路徑，條件表達式支援比較運算（
                             <code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code>）
                             與邏輯運算（<code>&amp;&amp;</code>、<code>||</code>）。
@@ -157,7 +157,7 @@
                             </div>
                             <div class="form-actions">
                                 <button class="btn-confirm" :disabled="!newRuleForm.name.trim()" @click="addRule">
-                                    <i class="fal fa-check"></i> 新增
+                                    <i class="ti ti-check"></i> 新增
                                 </button>
                                 <button class="btn-cancel" @click="cancelAddRule">取消</button>
                             </div>
@@ -172,10 +172,10 @@
                                 <div v-if="!rule.editing" class="rule-content">
                                     <div class="rule-name">{{ rule.name }}</div>
                                     <div v-if="rule.condition" class="rule-cond">
-                                        <i class="fal fa-filter"></i>
+                                        <i class="ti ti-filter"></i>
                                         <code>{{ rule.condition }}</code>
                                     </div>
-                                    <div v-else class="rule-cond no-cond"><i class="fal fa-check"></i> 無條件，所有申請皆適用</div>
+                                    <div v-else class="rule-cond no-cond"><i class="ti ti-check"></i> 無條件，所有申請皆適用</div>
                                 </div>
 
                                 <!-- Edit mode -->
@@ -188,7 +188,7 @@
                                     />
                                     <div class="edit-actions">
                                         <button class="btn-confirm-sm" :disabled="!rule.editName.trim()" @click="saveEditRule(i)">
-                                            <i class="fal fa-check"></i> 儲存
+                                            <i class="ti ti-check"></i> 儲存
                                         </button>
                                         <button class="btn-cancel-sm" @click="cancelEditRule(i)">取消</button>
                                     </div>
@@ -197,17 +197,17 @@
                                 <!-- Row actions -->
                                 <div v-if="!rule.editing" class="rule-row-actions">
                                     <button class="row-btn" title="編輯" @click="startEditRule(i)">
-                                        <i class="fal fa-edit"></i>
+                                        <i class="ti ti-edit"></i>
                                     </button>
                                     <button class="row-btn row-btn--danger" title="刪除" @click="deleteRule(i)">
-                                        <i class="fal fa-trash-alt"></i>
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <div v-else-if="!showAddRuleForm" class="no-rules">
-                            <i class="fal fa-info-circle"></i> 此流程尚未設定條件規則，點右上角「新增規則」開始建立
+                            <i class="ti ti-info-circle"></i> 此流程尚未設定條件規則，點右上角「新增規則」開始建立
                         </div>
                     </div>
                 </div>
@@ -220,14 +220,14 @@
                 <div class="modal-box modal-box--wide">
                     <div class="modal-header">
                         <div class="modal-title">
-                            <i class="fal fa-file-alt"></i>
+                            <i class="ti ti-file-text"></i>
                             {{ formModal.procName }} — 表單欄位管理
                         </div>
                         <div class="modal-header-actions">
                             <button v-if="!showAddFieldForm" class="btn-add-rule" @click="showAddFieldForm = true">
-                                <i class="fal fa-plus"></i> 新增欄位
+                                <i class="ti ti-plus"></i> 新增欄位
                             </button>
-                            <button class="modal-close" @click="closeFormModal"><i class="fal fa-times"></i></button>
+                            <button class="modal-close" @click="closeFormModal"><i class="ti ti-x"></i></button>
                         </div>
                     </div>
                     <div class="modal-body">
@@ -259,7 +259,7 @@
                                     :disabled="!newFieldForm.name.trim() || !newFieldForm.synopsis.trim()"
                                     @click="addField"
                                 >
-                                    <i class="fal fa-check"></i> 新增
+                                    <i class="ti ti-check"></i> 新增
                                 </button>
                                 <button class="btn-cancel" @click="cancelAddField">取消</button>
                             </div>
@@ -286,10 +286,10 @@
                                         <td>{{ f.synopsis }}</td>
                                         <td class="col-actions">
                                             <button class="row-btn" title="編輯" @click="startEditField(i)">
-                                                <i class="fal fa-edit"></i>
+                                                <i class="ti ti-edit"></i>
                                             </button>
                                             <button class="row-btn row-btn--danger" title="刪除" @click="deleteField(i)">
-                                                <i class="fal fa-trash-alt"></i>
+                                                <i class="ti ti-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -300,7 +300,7 @@
                                         <td><input v-model="f.editSynopsis" class="inline-input" placeholder="顯示說明" /></td>
                                         <td class="col-actions">
                                             <button class="btn-confirm-sm" :disabled="!f.editName.trim()" @click="saveEditField(i)">
-                                                <i class="fal fa-check"></i>
+                                                <i class="ti ti-check"></i>
                                             </button>
                                             <button class="btn-cancel-sm" @click="cancelEditField(i)">取消</button>
                                         </td>
@@ -310,7 +310,7 @@
                         </table>
 
                         <div v-else-if="!showAddFieldForm" class="no-rules">
-                            <i class="fal fa-info-circle"></i> 此流程尚未設定表單欄位，點右上角「新增欄位」開始建立
+                            <i class="ti ti-info-circle"></i> 此流程尚未設定表單欄位，點右上角「新增欄位」開始建立
                         </div>
                     </div>
                 </div>

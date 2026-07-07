@@ -11,7 +11,7 @@
                     <div class="stat-label">{{ stat.label }}</div>
                 </div>
                 <div class="stat-trend" :class="stat.trendDir">
-                    <i :class="stat.trendDir === 'up' ? 'fal fa-arrow-up' : 'fal fa-arrow-down'"></i>
+                    <i :class="stat.trendDir === 'up' ? 'ti ti-arrow-up' : 'ti ti-arrow-down'"></i>
                     {{ stat.trend }}
                 </div>
             </div>
@@ -21,7 +21,7 @@
         <div class="bottom-grid">
             <!-- Category Distribution -->
             <div class="panel">
-                <div class="panel-title"><i class="fal fa-chart-bar"></i> 流程分類分布</div>
+                <div class="panel-title"><i class="ti ti-chart-bar"></i> 流程分類分布</div>
 
                 <!-- Category cards grid -->
                 <div class="cat-grid">
@@ -62,7 +62,7 @@
 
             <!-- Recent Activity -->
             <div class="panel">
-                <div class="panel-title"><i class="fal fa-history"></i> 近期申請動態</div>
+                <div class="panel-title"><i class="ti ti-history"></i> 近期申請動態</div>
                 <div class="activity-list">
                     <div v-for="item in recentActivities" :key="item.id" class="activity-item">
                         <div class="activity-avatar">{{ item.submitterName[0] }}</div>
@@ -117,7 +117,7 @@ export default {
                     key: 'active',
                     value: active,
                     label: '已生效流程',
-                    icon: 'fal fa-sitemap',
+                    icon: 'ti ti-sitemap',
                     color: '#6e5faf',
                     bg: '#f0eeff',
                     trend: '較上月 +0',
@@ -127,7 +127,7 @@ export default {
                     key: 'total',
                     value: total,
                     label: '本月申請總量',
-                    icon: 'fal fa-file-alt',
+                    icon: 'ti ti-file-text',
                     color: '#f4a42c',
                     bg: '#fff8ee',
                     trend: '較上月 +3',
@@ -137,7 +137,7 @@ export default {
                     key: 'approved',
                     value: approved,
                     label: '本月核准件數',
-                    icon: 'fal fa-check-circle',
+                    icon: 'ti ti-circle-check',
                     color: '#00a76f',
                     bg: '#edfbf5',
                     trend: `核准率 ${rate}%`,
@@ -147,7 +147,7 @@ export default {
                     key: 'pending',
                     value: pending,
                     label: '目前待審核數',
-                    icon: 'fal fa-hourglass-half',
+                    icon: 'ti ti-hourglass',
                     color: '#e05c5c',
                     bg: '#fff0f0',
                     trend: '需盡快處理',

@@ -9,9 +9,9 @@
                 </div>
             </div>
             <div class="quick-actions">
-                <button class="qbtn primary" @click="$router.push({ name: 'FormCatalog' })"><i class="fal fa-plus"></i> 新增申請</button>
+                <button class="qbtn primary" @click="$router.push({ name: 'FormCatalog' })"><i class="ti ti-plus"></i> 新增申請</button>
                 <button class="qbtn outline" @click="$router.push({ name: 'ApprovalCenter' })">
-                    <i class="fal fa-clipboard-check"></i> 審核中心
+                    <i class="ti ti-clipboard-check"></i> 審核中心
                     <span v-if="stats.pendingMyAction" class="badge">{{ stats.pendingMyAction }}</span>
                 </button>
             </div>
@@ -25,7 +25,7 @@
                     <div class="stat-value">{{ s.value }}</div>
                     <div class="stat-label">{{ s.label }}</div>
                 </div>
-                <div v-if="s.route" class="stat-arrow"><i class="fal fa-chevron-right"></i></div>
+                <div v-if="s.route" class="stat-arrow"><i class="ti ti-chevron-right"></i></div>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
             <!-- 最近活動 -->
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title"><i class="fal fa-history"></i> 最近活動</span>
+                    <span class="panel-title"><i class="ti ti-history"></i> 最近活動</span>
                 </div>
                 <div class="activity-list">
                     <div v-for="(act, i) in stats.recentActivity" :key="i" class="activity-item">
@@ -52,7 +52,7 @@
                 <!-- 我的申請狀態 -->
                 <div class="panel">
                     <div class="panel-header">
-                        <span class="panel-title"><i class="fal fa-chart-pie"></i> 我的申請狀態</span>
+                        <span class="panel-title"><i class="ti ti-chart-pie"></i> 我的申請狀態</span>
                         <span class="panel-link" @click="$router.push({ name: 'MyRequests' })">查看全部</span>
                     </div>
                     <div class="my-status">
@@ -69,7 +69,7 @@
                 <!-- 可申請的表單 -->
                 <div class="panel">
                     <div class="panel-header">
-                        <span class="panel-title"><i class="fal fa-rocket"></i> 快速申請</span>
+                        <span class="panel-title"><i class="ti ti-rocket"></i> 快速申請</span>
                         <span class="panel-link" @click="$router.push({ name: 'FormCatalog' })">全部表單</span>
                     </div>
                     <div class="quick-forms">
@@ -81,7 +81,7 @@
                                 <div class="qf-name">{{ f.name }}</div>
                                 <div class="qf-cat">{{ f.category }}</div>
                             </div>
-                            <i class="fal fa-chevron-right qf-arrow"></i>
+                            <i class="ti ti-chevron-right qf-arrow"></i>
                         </div>
                     </div>
                 </div>
@@ -99,10 +99,10 @@ export default {
         return {
             stats: MOCK_DASHBOARD_STATS,
             quickForms: [
-                { id: 'PRO001', name: '請假申請', category: '人事管理', icon: 'fal fa-umbrella-beach', color: '#6e5faf' },
-                { id: 'PRO003', name: '費用報銷', category: '財務管理', icon: 'fal fa-receipt', color: '#0070d1' },
-                { id: 'PRO005', name: '會議室申請', category: '行政管理', icon: 'fal fa-door-open', color: '#00a76f' },
-                { id: 'PRO007', name: '資源借用', category: '資產管理', icon: 'fal fa-box-open', color: '#f4a42c' },
+                { id: 'PRO001', name: '請假申請', category: '人事管理', icon: 'ti ti-beach', color: '#6e5faf' },
+                { id: 'PRO003', name: '費用報銷', category: '財務管理', icon: 'ti ti-receipt', color: '#0070d1' },
+                { id: 'PRO005', name: '會議室申請', category: '行政管理', icon: 'ti ti-door-enter', color: '#00a76f' },
+                { id: 'PRO007', name: '資源借用', category: '資產管理', icon: 'ti ti-package', color: '#f4a42c' },
             ],
         };
     },
@@ -112,7 +112,7 @@ export default {
                 {
                     label: '待我審核',
                     value: this.stats.pendingMyAction,
-                    icon: 'fal fa-inbox',
+                    icon: 'ti ti-inbox',
                     bg: '#fff0f0',
                     color: '#e44d55',
                     route: 'ApprovalCenter',
@@ -120,7 +120,7 @@ export default {
                 {
                     label: '我的申請（處理中）',
                     value: this.stats.mySubmissions.pending,
-                    icon: 'fal fa-clock',
+                    icon: 'ti ti-clock',
                     bg: '#fff8ec',
                     color: '#f4a42c',
                     route: 'MyRequests',
@@ -128,7 +128,7 @@ export default {
                 {
                     label: '本月已核准',
                     value: this.stats.thisMonthApproved,
-                    icon: 'fal fa-check-circle',
+                    icon: 'ti ti-circle-check',
                     bg: '#f0faf5',
                     color: '#00a76f',
                     route: null,
@@ -136,7 +136,7 @@ export default {
                 {
                     label: '平均審核時數',
                     value: this.stats.avgApprovalHours + 'h',
-                    icon: 'fal fa-tachometer-fast',
+                    icon: 'ti ti-gauge',
                     bg: '#f0eeff',
                     color: '#6e5faf',
                     route: null,

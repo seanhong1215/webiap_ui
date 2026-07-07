@@ -20,6 +20,7 @@
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
+    "@tabler/icons-webfont": "^2.47.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",

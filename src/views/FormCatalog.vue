@@ -6,7 +6,7 @@
                 <p class="catalog-sub">選擇需要的申請類型，系統將自動帶入對應的審核流程</p>
             </div>
             <div class="catalog-search">
-                <i class="fal fa-search search-icon"></i>
+                <i class="ti ti-search search-icon"></i>
                 <input v-model="keyword" placeholder="搜尋表單名稱..." class="search-input" />
             </div>
         </div>
@@ -34,16 +34,16 @@
                 </div>
                 <div class="form-card-footer">
                     <div class="form-meta">
-                        <span><i class="fal fa-user"></i> {{ form.manager }}</span>
-                        <span><i class="fal fa-layer-group"></i> {{ form.version }}</span>
+                        <span><i class="ti ti-user"></i> {{ form.manager }}</span>
+                        <span><i class="ti ti-stack-2"></i> {{ form.version }}</span>
                     </div>
-                    <button class="apply-btn">申請 <i class="fal fa-arrow-right"></i></button>
+                    <button class="apply-btn">申請 <i class="ti ti-arrow-right"></i></button>
                 </div>
             </div>
         </div>
 
         <div v-if="filteredForms.length === 0" class="empty-state">
-            <i class="fal fa-search empty-icon"></i>
+            <i class="ti ti-search empty-icon"></i>
             <div>找不到符合「{{ keyword }}」的表單</div>
         </div>
     </div>
@@ -54,10 +54,10 @@ import { MOCK_CARDS, MOCK_CATEGORIES } from '@/utils/mockData';
 import global from '@/utils/global';
 
 const FORM_ICONS = {
-    PRJ001: { icon: 'fal fa-user-clock', color: '#6e5faf' },
-    PRJ002: { icon: 'fal fa-file-invoice-dollar', color: '#0070d1' },
-    PRJ003: { icon: 'fal fa-building', color: '#00a76f' },
-    PRJ004: { icon: 'fal fa-box', color: '#f4a42c' },
+    PRJ001: { icon: 'ti ti-user-check', color: '#6e5faf' },
+    PRJ002: { icon: 'ti ti-file-invoice', color: '#0070d1' },
+    PRJ003: { icon: 'ti ti-building', color: '#00a76f' },
+    PRJ004: { icon: 'ti ti-box', color: '#f4a42c' },
 };
 
 export default {
@@ -76,7 +76,7 @@ export default {
         allForms() {
             return MOCK_CARDS.map((card) => {
                 const status = global.processTypeConverter(card.startTime, card.endTime);
-                const prjMeta = FORM_ICONS[card.prjID] || { icon: 'fal fa-file-alt', color: '#6e5faf' };
+                const prjMeta = FORM_ICONS[card.prjID] || { icon: 'ti ti-file-text', color: '#6e5faf' };
                 return {
                     id: card.proID,
                     artId: card.artID,

@@ -2,7 +2,7 @@
     <div class="my-requests">
         <div class="req-header">
             <h2 class="req-title">我的申請記錄</h2>
-            <button class="new-btn" @click="$router.push({ name: 'FormCatalog' })"><i class="fal fa-plus"></i> 新增申請</button>
+            <button class="new-btn" @click="$router.push({ name: 'FormCatalog' })"><i class="ti ti-plus"></i> 新增申請</button>
         </div>
 
         <!-- 狀態篩選 -->
@@ -27,11 +27,11 @@
                         <div class="req-name">{{ sub.formName }}</div>
                         <span class="req-status-badge" :class="'s-' + sub.status">{{ statusLabel(sub.status) }}</span>
                     </div>
-                    <div class="req-serial"><i class="fal fa-hashtag"></i> {{ sub.serialNo }}</div>
+                    <div class="req-serial"><i class="ti ti-hash"></i> {{ sub.serialNo }}</div>
                     <div class="req-meta">
-                        <span><i class="fal fa-tag"></i> {{ sub.category }}</span>
-                        <span><i class="fal fa-calendar-alt"></i> 申請時間：{{ sub.submittedAt }}</span>
-                        <span v-if="sub.status === 'pending'"><i class="fal fa-map-marker-alt"></i> 目前關卡：{{ sub.currentStep }}</span>
+                        <span><i class="ti ti-tag"></i> {{ sub.category }}</span>
+                        <span><i class="ti ti-calendar-event"></i> 申請時間：{{ sub.submittedAt }}</span>
+                        <span v-if="sub.status === 'pending'"><i class="ti ti-map-pin"></i> 目前關卡：{{ sub.currentStep }}</span>
                     </div>
 
                     <!-- 進度條 -->
@@ -55,7 +55,7 @@
                             <div class="dp-title">{{ activeDetail.formName }}</div>
                             <div class="dp-serial">{{ activeDetail.serialNo }}</div>
                         </div>
-                        <button class="dp-close" @click="activeDetail = null"><i class="fal fa-times"></i></button>
+                        <button class="dp-close" @click="activeDetail = null"><i class="ti ti-x"></i></button>
                     </div>
                     <div class="dp-body">
                         <span class="req-status-badge large" :class="'s-' + activeDetail.status">{{
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div v-if="activeDetail.status === 'rejected'" class="dp-footer">
-                        <button class="reapply-btn" @click="reApply(activeDetail)"><i class="fal fa-redo"></i> 重新申請</button>
+                        <button class="reapply-btn" @click="reApply(activeDetail)"><i class="ti ti-refresh"></i> 重新申請</button>
                     </div>
                 </div>
             </div>
@@ -151,9 +151,7 @@ export default {
             return { pending: '待審核', approved: '已核准', rejected: '已退回', recalled: '已撤回' }[s] || s;
         },
         stepIcon(s) {
-            return (
-                { done: 'fal fa-check', current: 'fal fa-spinner', waiting: 'fal fa-clock', rejected: 'fal fa-times' }[s] || 'fal fa-circle'
-            );
+            return { done: 'ti ti-check', current: 'ti ti-loader-2', waiting: 'ti ti-clock', rejected: 'ti ti-x' }[s] || 'ti ti-circle';
         },
         labeledData(sub) {
             const r = {};

@@ -3,6 +3,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
+import './assets/fonts/tabler-subset.css';
 import './assets/css/scrollbar.css';
 
 createApp(App).use(store).use(router).mount('#app');

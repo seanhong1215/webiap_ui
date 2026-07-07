@@ -38,11 +38,11 @@
             <div class="filter-item search-item">
                 <label>搜尋</label>
                 <div class="search-wrapper">
-                    <i class="fal fa-search"></i>
+                    <i class="ti ti-search"></i>
                     <input v-model="searchText" placeholder="申請人、序號或流程名稱" />
                 </div>
             </div>
-            <button v-if="hasFilter" class="btn-reset" @click="resetFilters"><i class="fal fa-times"></i> 重設篩選</button>
+            <button v-if="hasFilter" class="btn-reset" @click="resetFilters"><i class="ti ti-x"></i> 重設篩選</button>
         </div>
 
         <!-- Records Count -->
@@ -76,8 +76,8 @@
                         >
                             <td class="col-expand">
                                 <i
-                                    class="fal"
-                                    :class="expandedId === rec.id ? 'fa-chevron-down' : 'fa-chevron-right'"
+                                    class="ti"
+                                    :class="expandedId === rec.id ? 'ti-chevron-down' : 'ti-chevron-right'"
                                     style="color: #c9c2e8; font-size: 11px"
                                 ></i>
                             </td>
@@ -105,7 +105,7 @@
                                 <div class="detail-content">
                                     <!-- Form Data -->
                                     <div class="detail-section">
-                                        <div class="detail-section-title"><i class="fal fa-file-alt"></i> 表單內容</div>
+                                        <div class="detail-section-title"><i class="ti ti-file-text"></i> 表單內容</div>
                                         <div class="form-grid">
                                             <div v-for="(val, key) in rec.formData" :key="key" class="form-field">
                                                 <div class="field-key">{{ key }}</div>
@@ -116,7 +116,7 @@
 
                                     <!-- Approval Steps -->
                                     <div class="detail-section">
-                                        <div class="detail-section-title"><i class="fal fa-stream"></i> 審核軌跡</div>
+                                        <div class="detail-section-title"><i class="ti ti-timeline"></i> 審核軌跡</div>
                                         <div class="steps-timeline">
                                             <div
                                                 v-for="step in rec.steps"
@@ -148,7 +148,7 @@
 
             <!-- Empty State -->
             <div v-if="filteredRecords.length === 0" class="empty-state">
-                <i class="fal fa-search"></i>
+                <i class="ti ti-search"></i>
                 <p>查無符合條件的申請記錄</p>
             </div>
         </div>
@@ -156,11 +156,11 @@
         <!-- Pagination -->
         <div v-if="totalPages > 1" class="pagination-bar">
             <button class="pag-btn" :disabled="currentPage === 1" @click="currentPage--">
-                <i class="fal fa-chevron-left"></i>
+                <i class="ti ti-chevron-left"></i>
             </button>
             <span class="pag-info">第 {{ currentPage }} 頁，共 {{ totalPages }} 頁</span>
             <button class="pag-btn" :disabled="currentPage === totalPages" @click="currentPage++">
-                <i class="fal fa-chevron-right"></i>
+                <i class="ti ti-chevron-right"></i>
             </button>
         </div>
     </div>
@@ -188,12 +188,12 @@ export default {
         summaryStats() {
             const all = MOCK_ADMIN_RECORDS;
             return [
-                { key: '', label: '全部記錄', count: all.length, icon: 'fal fa-clipboard-list', color: '#6e5faf', bg: '#f0eeff' },
+                { key: '', label: '全部記錄', count: all.length, icon: 'ti ti-clipboard-list', color: '#6e5faf', bg: '#f0eeff' },
                 {
                     key: 'pending',
                     label: '待審核',
                     count: all.filter((r) => r.status === 'pending').length,
-                    icon: 'fal fa-hourglass-half',
+                    icon: 'ti ti-hourglass',
                     color: '#f4a42c',
                     bg: '#fff8ee',
                 },
@@ -201,7 +201,7 @@ export default {
                     key: 'approved',
                     label: '已核准',
                     count: all.filter((r) => r.status === 'approved').length,
-                    icon: 'fal fa-check-circle',
+                    icon: 'ti ti-circle-check',
                     color: '#00a76f',
                     bg: '#edfbf5',
                 },
@@ -209,7 +209,7 @@ export default {
                     key: 'rejected',
                     label: '已退回',
                     count: all.filter((r) => r.status === 'rejected').length,
-                    icon: 'fal fa-times-circle',
+                    icon: 'ti ti-circle-x',
                     color: '#e05c5c',
                     bg: '#fff0f0',
                 },

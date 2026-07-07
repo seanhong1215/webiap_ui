@@ -3,7 +3,7 @@
         <!-- Sidebar -->
         <aside class="sidebar" :class="{ collapsed: sidebarCollapsed }">
             <div class="sidebar-brand" @click="$router.push({ name: 'Dashboard' })">
-                <div class="brand-icon"><i class="fal fa-network-wired"></i></div>
+                <div class="brand-icon"><i class="ti ti-network"></i></div>
                 <div v-show="!sidebarCollapsed" class="brand-text">
                     <div class="brand-name">FlowRing</div>
                     <div class="brand-sub">企業智慧簽核平台</div>
@@ -15,23 +15,23 @@
                 <div v-show="!sidebarCollapsed" class="nav-section-label">使用者</div>
 
                 <router-link :to="{ name: 'Dashboard' }" class="nav-item" active-class="active">
-                    <i class="fal fa-chart-line nav-icon"></i>
+                    <i class="ti ti-chart-line nav-icon"></i>
                     <span v-show="!sidebarCollapsed" class="nav-label">控制台</span>
                 </router-link>
 
                 <router-link :to="{ name: 'FormCatalog' }" class="nav-item" active-class="active">
-                    <i class="fal fa-file-edit nav-icon"></i>
+                    <i class="ti ti-file-pencil nav-icon"></i>
                     <span v-show="!sidebarCollapsed" class="nav-label">申請表單</span>
                 </router-link>
 
                 <router-link :to="{ name: 'ApprovalCenter' }" class="nav-item" active-class="active">
-                    <i class="fal fa-stamp nav-icon"></i>
+                    <i class="ti ti-rubber-stamp nav-icon"></i>
                     <span v-show="!sidebarCollapsed" class="nav-label">審核中心</span>
                     <span v-if="pendingCount > 0" class="nav-badge">{{ pendingCount }}</span>
                 </router-link>
 
                 <router-link :to="{ name: 'MyRequests' }" class="nav-item" active-class="active">
-                    <i class="fal fa-inbox nav-icon"></i>
+                    <i class="ti ti-inbox nav-icon"></i>
                     <span v-show="!sidebarCollapsed" class="nav-label">我的申請</span>
                 </router-link>
 
@@ -41,17 +41,17 @@
                     <div v-show="sidebarCollapsed" class="nav-divider"></div>
 
                     <router-link :to="{ name: 'AdminOverview' }" class="nav-item" active-class="active">
-                        <i class="fal fa-th-large nav-icon"></i>
+                        <i class="ti ti-layout-grid nav-icon"></i>
                         <span v-show="!sidebarCollapsed" class="nav-label">系統總覽</span>
                     </router-link>
 
                     <router-link :to="{ name: 'AdminProcesses' }" class="nav-item" active-class="active">
-                        <i class="fal fa-sitemap nav-icon"></i>
+                        <i class="ti ti-sitemap nav-icon"></i>
                         <span v-show="!sidebarCollapsed" class="nav-label">流程總覽</span>
                     </router-link>
 
                     <router-link :to="{ name: 'AdminRecords' }" class="nav-item" active-class="active">
-                        <i class="fal fa-clipboard-list nav-icon"></i>
+                        <i class="ti ti-clipboard-list nav-icon"></i>
                         <span v-show="!sidebarCollapsed" class="nav-label">申請記錄</span>
                     </router-link>
                 </template>
@@ -67,7 +67,7 @@
                 </div>
                 <div v-show="sidebarCollapsed" class="user-avatar-sm">{{ userAvatar }}</div>
                 <button class="collapse-btn" @click="sidebarCollapsed = !sidebarCollapsed">
-                    <i :class="sidebarCollapsed ? 'fal fa-chevron-right' : 'fal fa-chevron-left'"></i>
+                    <i :class="sidebarCollapsed ? 'ti ti-chevron-right' : 'ti ti-chevron-left'"></i>
                 </button>
             </div>
         </aside>
@@ -83,7 +83,7 @@
                         <span v-if="isAdmin" class="role-badge">管理員</span>
                     </div>
                     <button class="logout-btn" title="登出" @click="logout">
-                        <i class="fal fa-sign-out"></i>
+                        <i class="ti ti-logout"></i>
                     </button>
                 </div>
             </header>

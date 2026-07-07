@@ -12,14 +12,14 @@
         <!-- 待審核列表 -->
         <template v-if="tab === 'pending'">
             <div v-if="pendingApprovals.length === 0" class="empty-state">
-                <i class="fal fa-check-circle empty-icon"></i>
+                <i class="ti ti-circle-check empty-icon"></i>
                 <div>目前沒有待審核的申請</div>
             </div>
             <div v-else class="approval-list">
                 <div v-for="appr in pendingApprovals" :key="appr.id" class="appr-card" @click="openApproval(appr)">
                     <div class="appr-left">
                         <div class="appr-urgency" :class="appr.urgency">
-                            <i :class="appr.urgency === 'urgent' ? 'fal fa-exclamation-circle' : 'fal fa-clock'"></i>
+                            <i :class="appr.urgency === 'urgent' ? 'ti ti-exclamation-circle' : 'ti ti-clock'"></i>
                         </div>
                     </div>
                     <div class="appr-body">
@@ -27,10 +27,10 @@
                             <span class="appr-form-name">{{ appr.formName }}</span>
                             <span v-if="appr.urgency === 'urgent'" class="urgency-tag">緊急</span>
                         </div>
-                        <div class="appr-submitter"><i class="fal fa-user"></i> {{ appr.submittedBy }}（{{ appr.submittedByDept }}）</div>
+                        <div class="appr-submitter"><i class="ti ti-user"></i> {{ appr.submittedBy }}（{{ appr.submittedByDept }}）</div>
                         <div class="appr-meta">
-                            <span><i class="fal fa-hashtag"></i> {{ appr.serialNo }}</span>
-                            <span><i class="fal fa-calendar"></i> {{ appr.submittedAt }}</span>
+                            <span><i class="ti ti-hash"></i> {{ appr.serialNo }}</span>
+                            <span><i class="ti ti-calendar"></i> {{ appr.submittedAt }}</span>
                             <span class="cat-tag">{{ appr.category }}</span>
                         </div>
                         <!-- 表單摘要 -->
@@ -41,8 +41,8 @@
                         </div>
                     </div>
                     <div class="appr-actions" @click.stop>
-                        <button class="act-btn approve" @click="doApprove(appr)"><i class="fal fa-check"></i> 核准</button>
-                        <button class="act-btn reject" @click="doReject(appr)"><i class="fal fa-times"></i> 退回</button>
+                        <button class="act-btn approve" @click="doApprove(appr)"><i class="ti ti-check"></i> 核准</button>
+                        <button class="act-btn reject" @click="doReject(appr)"><i class="ti ti-x"></i> 退回</button>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                 <div class="appr-dialog">
                     <div class="dialog-header">
                         <div class="dialog-title">{{ activeApproval.formName }}</div>
-                        <button class="dialog-close" @click="activeApproval = null"><i class="fal fa-times"></i></button>
+                        <button class="dialog-close" @click="activeApproval = null"><i class="ti ti-x"></i></button>
                     </div>
                     <div class="dialog-body">
                         <div class="info-grid">
@@ -122,8 +122,8 @@
                         </div>
                     </div>
                     <div class="dialog-footer">
-                        <button class="act-btn reject" @click="confirmReject"><i class="fal fa-times"></i> 退回申請</button>
-                        <button class="act-btn approve" @click="confirmApprove"><i class="fal fa-check"></i> 核准通過</button>
+                        <button class="act-btn reject" @click="confirmReject"><i class="ti ti-x"></i> 退回申請</button>
+                        <button class="act-btn approve" @click="confirmApprove"><i class="ti ti-check"></i> 核准通過</button>
                     </div>
                 </div>
             </div>
