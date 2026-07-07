@@ -19,14 +19,17 @@
 
         <!-- 數字卡片 -->
         <div class="stat-row">
-            <div v-for="s in statCards" :key="s.label" class="stat-card" @click="s.route && $router.push({ name: s.route })">
-                <div class="stat-icon" :style="{ background: s.bg }"><i :class="s.icon"></i></div>
-                <div class="stat-body">
-                    <div class="stat-value">{{ s.value }}</div>
-                    <div class="stat-label">{{ s.label }}</div>
-                </div>
-                <div v-if="s.route" class="stat-arrow"><i class="ti ti-chevron-right"></i></div>
-            </div>
+            <StatCard
+                v-for="s in statCards"
+                :key="s.label"
+                :value="s.value"
+                :label="s.label"
+                :icon="s.icon"
+                :color="s.color"
+                :bg="s.bg"
+                :clickable="!!s.route"
+                @click="s.route && $router.push({ name: s.route })"
+            />
         </div>
 
         <!-- 下半部：活動紀錄 + 快速入口 -->
@@ -92,9 +95,11 @@
 
 <script>
 import { MOCK_DASHBOARD_STATS } from '@/utils/mockData';
+import StatCard from '@/components/ui/StatCard.vue';
 
 export default {
     name: 'Dashboard',
+    components: { StatCard },
     data() {
         return {
             stats: MOCK_DASHBOARD_STATS,
@@ -112,7 +117,7 @@ export default {
                 {
                     label: '待我審核',
                     value: this.stats.pendingMyAction,
-                    icon: 'ti ti-inbox',
+                    icon: 'inbox',
                     bg: '#fff0f0',
                     color: '#e44d55',
                     route: 'ApprovalCenter',
@@ -120,7 +125,7 @@ export default {
                 {
                     label: '我的申請（處理中）',
                     value: this.stats.mySubmissions.pending,
-                    icon: 'ti ti-clock',
+                    icon: 'clock',
                     bg: '#fff8ec',
                     color: '#f4a42c',
                     route: 'MyRequests',
@@ -128,7 +133,7 @@ export default {
                 {
                     label: '本月已核准',
                     value: this.stats.thisMonthApproved,
-                    icon: 'ti ti-circle-check',
+                    icon: 'circle-check',
                     bg: '#f0faf5',
                     color: '#00a76f',
                     route: null,
@@ -136,7 +141,7 @@ export default {
                 {
                     label: '平均審核時數',
                     value: this.stats.avgApprovalHours + 'h',
-                    icon: 'ti ti-gauge',
+                    icon: 'gauge',
                     bg: '#f0eeff',
                     color: '#6e5faf',
                     route: null,
@@ -246,53 +251,6 @@ $accent: #6e5faf;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     margin-bottom: 20px;
-}
-
-.stat-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid #eaecf0;
-
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    }
-
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        flex-shrink: 0;
-    }
-
-    .stat-body {
-        flex: 1;
-    }
-    .stat-value {
-        font-size: 28px;
-        font-weight: 700;
-        color: #333;
-        line-height: 1;
-    }
-    .stat-label {
-        font-size: 13px;
-        color: #919191;
-        margin-top: 4px;
-    }
-    .stat-arrow {
-        color: #ccc;
-        font-size: 13px;
-    }
 }
 
 // ── Dashboard Body ────────────────────────────────

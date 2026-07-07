@@ -74,7 +74,7 @@
                             <div class="activity-sub">{{ item.formName }} · {{ item.currentStep }}</div>
                             <div class="activity-time">{{ item.submittedAt }}</div>
                         </div>
-                        <span class="status-chip" :class="`chip--${item.status}`">{{ statusTextMap[item.status] }}</span>
+                        <StatusBadge variant="submission" :value="item.status" />
                     </div>
                 </div>
             </div>
@@ -85,9 +85,12 @@
 <script>
 import { MOCK_CARDS, MOCK_CATEGORIES, MOCK_ADMIN_RECORDS } from '@/utils/mockData';
 import global from '@/utils/global';
+import { PROCESS_STATUS } from '@/constants/status';
+import StatusBadge from '@/components/ui/StatusBadge.vue';
 
-const TYPE_COLOR = { 1: '#a99de0', 2: '#6e5faf', 3: '#00a76f', 4: '#c4c4c4' };
-const TYPE_NAME = { 1: '初始', 2: '待生效', 3: '已生效', 4: '已關閉' };
+// 由共用 PROCESS_STATUS 衍生,確保分布圖/圖例與全站狀態色一致
+const TYPE_COLOR = Object.fromEntries(Object.entries(PROCESS_STATUS).map(([t, m]) => [t, m.color]));
+const TYPE_NAME = Object.fromEntries(Object.entries(PROCESS_STATUS).map(([t, m]) => [t, m.adminLabel]));
 const CAT_COLOR = { PRJ001: '#6e5faf', PRJ002: '#f4a42c', PRJ003: '#00a76f', PRJ004: '#e05c5c' };
 const TYPE_DESC = {
     1: '已建立，尚未設定生效時間',
@@ -98,6 +101,7 @@ const TYPE_DESC = {
 
 export default {
     name: 'AdminOverview',
+    components: { StatusBadge },
     computed: {
         processesWithType() {
             return MOCK_CARDS.map((c) => ({
@@ -185,9 +189,6 @@ export default {
         },
         recentActivities() {
             return [...MOCK_ADMIN_RECORDS].sort((a, b) => b.submittedAt.localeCompare(a.submittedAt)).slice(0, 6);
-        },
-        statusTextMap() {
-            return { pending: '待審核', approved: '已核准', rejected: '已退回' };
         },
     },
 };
@@ -506,27 +507,6 @@ $accent: #6e5faf;
             color: #bbb;
             margin-top: 2px;
         }
-    }
-}
-
-.status-chip {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-
-    &.chip--pending {
-        background: #fff8ee;
-        color: #f4a42c;
-    }
-    &.chip--approved {
-        background: #edfbf5;
-        color: #00a76f;
-    }
-    &.chip--rejected {
-        background: #fff0f0;
-        color: #e05c5c;
     }
 }
 </style>

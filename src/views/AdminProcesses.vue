@@ -66,7 +66,7 @@
             <div v-for="proc in filteredProcesses" :key="proc.proID" class="proc-card">
                 <div class="card-top">
                     <div class="card-name">{{ proc.proName }}</div>
-                    <div class="type-badge" :class="`type--${proc.typeCode}`">{{ typeLabel[proc.typeCode] }}</div>
+                    <StatusBadge variant="process" :value="proc.typeCode" />
                 </div>
                 <div class="card-meta">
                     <span class="meta-item"><i class="ti ti-tag"></i>{{ getCategoryName(proc.prjID) }}</span>
@@ -322,11 +322,12 @@
 <script>
 import { MOCK_CARDS, MOCK_CATEGORIES, CONDITION_DATA, ARTIFACT_ITEMS, MOCK_PROCESS_MONTHLY_COUNT } from '@/utils/mockData';
 import global from '@/utils/global';
-
-const TYPE_LABEL = { 1: '初始', 2: '待生效', 3: '已生效', 4: '已關閉' };
+import { PROCESS_STATUS } from '@/constants/status';
+import StatusBadge from '@/components/ui/StatusBadge.vue';
 
 export default {
     name: 'AdminProcesses',
+    components: { StatusBadge },
     data() {
         return {
             searchText: '',
@@ -354,12 +355,13 @@ export default {
             }));
         },
         statusTabs() {
+            // 色票與標籤取自共用的 PROCESS_STATUS,確保與狀態徽章一致
             const tabs = [
                 { label: '全部', value: 0, color: '#aaa' },
-                { label: '已生效', value: 3, color: '#00a76f' },
-                { label: '待生效', value: 2, color: '#6e5faf' },
-                { label: '初始', value: 1, color: '#a99de0' },
-                { label: '已關閉', value: 4, color: '#c4c4c4' },
+                { label: PROCESS_STATUS[3].adminLabel, value: 3, color: PROCESS_STATUS[3].color },
+                { label: PROCESS_STATUS[2].adminLabel, value: 2, color: PROCESS_STATUS[2].color },
+                { label: PROCESS_STATUS[1].adminLabel, value: 1, color: PROCESS_STATUS[1].color },
+                { label: PROCESS_STATUS[4].adminLabel, value: 4, color: PROCESS_STATUS[4].color },
             ];
             return tabs.map((t) => ({
                 ...t,
@@ -374,9 +376,6 @@ export default {
                 list = list.filter((p) => p.proName.toLowerCase().includes(kw));
             }
             return list;
-        },
-        typeLabel() {
-            return TYPE_LABEL;
         },
     },
     methods: {
@@ -829,31 +828,6 @@ $accent: #6e5faf;
                 }
             }
         }
-    }
-}
-
-.type-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    &.type--1 {
-        background: #f0eeff;
-        color: #a99de0;
-    }
-    &.type--2 {
-        background: #f0eeff;
-        color: $accent;
-    }
-    &.type--3 {
-        background: #edfbf5;
-        color: #00a76f;
-    }
-    &.type--4 {
-        background: #f5f5f5;
-        color: #aaa;
     }
 }
 

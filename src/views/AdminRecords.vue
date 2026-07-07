@@ -2,21 +2,19 @@
     <div class="admin-records">
         <!-- Summary Bar -->
         <div class="summary-bar">
-            <div
+            <StatCard
                 v-for="s in summaryStats"
                 :key="s.key"
-                class="summary-card"
-                :class="{ active: filterStatus === s.key }"
+                :value="s.count"
+                :label="s.label"
+                :icon="s.icon"
+                :color="s.color"
+                :bg="s.bg"
+                value-color
+                clickable
+                :active="filterStatus === s.key"
                 @click="toggleStatusFilter(s.key)"
-            >
-                <div class="summary-icon" :style="{ background: s.bg }">
-                    <i :class="s.icon" :style="{ color: s.color }"></i>
-                </div>
-                <div class="summary-body">
-                    <div class="summary-num" :style="{ color: s.color }">{{ s.count }}</div>
-                    <div class="summary-label">{{ s.label }}</div>
-                </div>
-            </div>
+            />
         </div>
 
         <!-- Filter Bar -->
@@ -91,9 +89,7 @@
                             <td class="dept-cell">{{ rec.submitterDept }}</td>
                             <td>{{ rec.formName }}</td>
                             <td>
-                                <span class="status-chip" :class="`chip--${rec.status}`">
-                                    {{ statusTextMap[rec.status] }}
-                                </span>
+                                <StatusBadge variant="submission" :value="rec.status" />
                             </td>
                             <td class="date-cell">{{ rec.submittedAt }}</td>
                             <td class="step-cell">{{ rec.currentStep }}</td>
@@ -147,10 +143,7 @@
             </table>
 
             <!-- Empty State -->
-            <div v-if="filteredRecords.length === 0" class="empty-state">
-                <i class="ti ti-search"></i>
-                <p>查無符合條件的申請記錄</p>
-            </div>
+            <EmptyState v-if="filteredRecords.length === 0" icon="search" title="查無符合條件的申請記錄" hint="調整篩選條件或清除搜尋" />
         </div>
 
         <!-- Pagination -->
@@ -168,11 +161,15 @@
 
 <script>
 import { MOCK_ADMIN_RECORDS, MOCK_CATEGORIES } from '@/utils/mockData';
+import StatCard from '@/components/ui/StatCard.vue';
+import StatusBadge from '@/components/ui/StatusBadge.vue';
+import EmptyState from '@/components/ui/EmptyState.vue';
 
 const PAGE_SIZE = 8;
 
 export default {
     name: 'AdminRecords',
+    components: { StatCard, StatusBadge, EmptyState },
     data() {
         return {
             filterStatus: '',
@@ -188,12 +185,12 @@ export default {
         summaryStats() {
             const all = MOCK_ADMIN_RECORDS;
             return [
-                { key: '', label: '全部記錄', count: all.length, icon: 'ti ti-clipboard-list', color: '#6e5faf', bg: '#f0eeff' },
+                { key: '', label: '全部記錄', count: all.length, icon: 'clipboard-list', color: '#6e5faf', bg: '#f0eeff' },
                 {
                     key: 'pending',
                     label: '待審核',
                     count: all.filter((r) => r.status === 'pending').length,
-                    icon: 'ti ti-hourglass',
+                    icon: 'hourglass',
                     color: '#f4a42c',
                     bg: '#fff8ee',
                 },
@@ -201,7 +198,7 @@ export default {
                     key: 'approved',
                     label: '已核准',
                     count: all.filter((r) => r.status === 'approved').length,
-                    icon: 'ti ti-circle-check',
+                    icon: 'circle-check',
                     color: '#00a76f',
                     bg: '#edfbf5',
                 },
@@ -209,7 +206,7 @@ export default {
                     key: 'rejected',
                     label: '已退回',
                     count: all.filter((r) => r.status === 'rejected').length,
-                    icon: 'ti ti-circle-x',
+                    icon: 'circle-x',
                     color: '#e05c5c',
                     bg: '#fff0f0',
                 },
@@ -243,9 +240,6 @@ export default {
         paginatedRecords() {
             const start = (this.currentPage - 1) * PAGE_SIZE;
             return this.filteredRecords.slice(start, start + PAGE_SIZE);
-        },
-        statusTextMap() {
-            return { pending: '待審核', approved: '已核准', rejected: '已退回' };
         },
     },
     watch: {
@@ -300,53 +294,6 @@ $accent: #6e5faf;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
-}
-
-.summary-card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    box-shadow: 0 1px 6px rgba(72, 62, 114, 0.07);
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 2px solid transparent;
-
-    &:hover {
-        border-color: #e0ddf0;
-    }
-    &.active {
-        border-color: $accent;
-        background: #faf9fd;
-    }
-
-    .summary-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-
-        i {
-            font-size: 16px;
-        }
-    }
-
-    .summary-num {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1;
-    }
-
-    .summary-label {
-        font-size: 12px;
-        color: #888;
-        margin-top: 3px;
-    }
 }
 
 // ── Filter Bar ────────────────────────────────────
@@ -556,27 +503,6 @@ $accent: #6e5faf;
     }
 }
 
-.status-chip {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-
-    &.chip--pending {
-        background: #fff8ee;
-        color: #f4a42c;
-    }
-    &.chip--approved {
-        background: #edfbf5;
-        color: #00a76f;
-    }
-    &.chip--rejected {
-        background: #fff0f0;
-        color: #e05c5c;
-    }
-}
-
 // ── Detail Content ────────────────────────────────
 .detail-content {
     display: grid;
@@ -731,22 +657,6 @@ $accent: #6e5faf;
 }
 
 // ── Empty State ───────────────────────────────────
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px;
-    color: #ccc;
-
-    i {
-        font-size: 40px;
-        margin-bottom: 10px;
-    }
-    p {
-        font-size: 14px;
-    }
-}
-
 // ── Pagination ────────────────────────────────────
 .pagination-bar {
     display: flex;

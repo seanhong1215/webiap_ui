@@ -25,7 +25,7 @@
                     <div class="form-icon" :style="{ background: form.color + '18', color: form.color }">
                         <i :class="form.icon"></i>
                     </div>
-                    <span class="form-status-badge" :class="'status-' + form.status">{{ statusLabel(form.status) }}</span>
+                    <StatusBadge variant="process" :value="form.status" label-set="user" />
                 </div>
                 <div class="form-card-body">
                     <div class="form-name">{{ form.name }}</div>
@@ -42,16 +42,15 @@
             </div>
         </div>
 
-        <div v-if="filteredForms.length === 0" class="empty-state">
-            <i class="ti ti-search empty-icon"></i>
-            <div>找不到符合「{{ keyword }}」的表單</div>
-        </div>
+        <EmptyState v-if="filteredForms.length === 0" icon="search" :title="`找不到符合「${keyword}」的表單`" hint="試試其他關鍵字或分類" />
     </div>
 </template>
 
 <script>
 import { MOCK_CARDS, MOCK_CATEGORIES } from '@/utils/mockData';
 import global from '@/utils/global';
+import StatusBadge from '@/components/ui/StatusBadge.vue';
+import EmptyState from '@/components/ui/EmptyState.vue';
 
 const FORM_ICONS = {
     PRJ001: { icon: 'ti ti-user-check', color: '#6e5faf' },
@@ -62,6 +61,7 @@ const FORM_ICONS = {
 
 export default {
     name: 'FormCatalog',
+    components: { StatusBadge, EmptyState },
     data() {
         return {
             keyword: '',
@@ -100,9 +100,6 @@ export default {
         },
     },
     methods: {
-        statusLabel(type) {
-            return { 1: '草稿', 2: '即將生效', 3: '可申請', 4: '已停用' }[type] || '-';
-        },
         goToForm(form) {
             this.$router.push({ name: 'FormDetail', params: { id: form.id } });
         },
@@ -228,29 +225,6 @@ $accent: #6e5faf;
     }
 }
 
-.form-status-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
-    &.status-1 {
-        background: #f5f5f5;
-        color: #aaa;
-    }
-    &.status-2 {
-        background: #fff8ec;
-        color: #f4a42c;
-    }
-    &.status-3 {
-        background: #f0faf5;
-        color: #00a76f;
-    }
-    &.status-4 {
-        background: #fff0f0;
-        color: #e44d55;
-    }
-}
-
 .form-card-body {
     .form-name {
         font-size: 16px;
@@ -307,18 +281,6 @@ $accent: #6e5faf;
     transition: opacity 0.15s;
     &:hover {
         opacity: 0.88;
-    }
-}
-
-.empty-state {
-    text-align: center;
-    padding: 60px 0;
-    color: #aaa;
-    font-size: 14px;
-    .empty-icon {
-        font-size: 40px;
-        display: block;
-        margin-bottom: 12px;
     }
 }
 </style>

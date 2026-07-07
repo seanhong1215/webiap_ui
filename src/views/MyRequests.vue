@@ -25,7 +25,7 @@
                 <div class="req-body">
                     <div class="req-top">
                         <div class="req-name">{{ sub.formName }}</div>
-                        <span class="req-status-badge" :class="'s-' + sub.status">{{ statusLabel(sub.status) }}</span>
+                        <StatusBadge variant="submission" :value="sub.status" />
                     </div>
                     <div class="req-serial"><i class="ti ti-hash"></i> {{ sub.serialNo }}</div>
                     <div class="req-meta">
@@ -58,9 +58,7 @@
                         <button class="dp-close" @click="activeDetail = null"><i class="ti ti-x"></i></button>
                     </div>
                     <div class="dp-body">
-                        <span class="req-status-badge large" :class="'s-' + activeDetail.status">{{
-                            statusLabel(activeDetail.status)
-                        }}</span>
+                        <StatusBadge variant="submission" :value="activeDetail.status" />
 
                         <!-- 審核進度 -->
                         <div class="dp-section">
@@ -100,6 +98,7 @@
 
 <script>
 import { MOCK_SUBMISSIONS } from '@/utils/mockData';
+import StatusBadge from '@/components/ui/StatusBadge.vue';
 
 const FIELD_LABELS = {
     LeaveType: '請假類型',
@@ -124,6 +123,7 @@ const FIELD_LABELS = {
 
 export default {
     name: 'MyRequests',
+    components: { StatusBadge },
     data() {
         return {
             submissions: [...MOCK_SUBMISSIONS],
@@ -147,9 +147,6 @@ export default {
         },
     },
     methods: {
-        statusLabel(s) {
-            return { pending: '待審核', approved: '已核准', rejected: '已退回', recalled: '已撤回' }[s] || s;
-        },
         stepIcon(s) {
             return { done: 'ti ti-check', current: 'ti ti-loader-2', waiting: 'ti ti-clock', rejected: 'ti ti-x' }[s] || 'ti ti-circle';
         },
@@ -315,35 +312,6 @@ $accent: #6e5faf;
     margin-bottom: 14px;
     i {
         margin-right: 3px;
-    }
-}
-
-.req-status-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 10px;
-    &.large {
-        font-size: 13px;
-        padding: 5px 14px;
-        margin-bottom: 16px;
-        display: inline-block;
-    }
-    &.s-pending {
-        background: #fff8ec;
-        color: #f4a42c;
-    }
-    &.s-approved {
-        background: #f0faf5;
-        color: #00a76f;
-    }
-    &.s-rejected {
-        background: #fff0f0;
-        color: #e44d55;
-    }
-    &.s-recalled {
-        background: #f5f5f5;
-        color: #aaa;
     }
 }
 
