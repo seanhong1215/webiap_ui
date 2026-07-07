@@ -3,7 +3,7 @@
         <!-- 歡迎區塊 -->
         <div class="welcome-banner">
             <div class="welcome-text">
-                <div class="greeting">早安，王小明 👋</div>
+                <div class="greeting">早安，{{ userName }} 👋</div>
                 <div class="sub">
                     今天有 <strong>{{ stats.pendingMyAction }}</strong> 份文件等待您審核
                 </div>
@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { MOCK_DASHBOARD_STATS } from '@/utils/mockData';
 import StatCard from '@/components/ui/StatCard.vue';
 
@@ -112,6 +113,10 @@ export default {
         };
     },
     computed: {
+        ...mapGetters('user', ['currentUser']),
+        userName() {
+            return this.currentUser?.name || '訪客';
+        },
         statCards() {
             return [
                 {
@@ -169,9 +174,6 @@ export default {
 <style lang="scss" scoped>
 $primary: #483e72;
 $accent: #6e5faf;
-
-.dashboard {
-}
 
 // ── Welcome Banner ────────────────────────────────
 .welcome-banner {
